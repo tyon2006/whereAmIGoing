@@ -58,7 +58,7 @@ public class WhereAmIGoingEventHandler {
 		BlockPos playerPosition = Minecraft.getMinecraft().player.getPosition(); //get the position of the character
 		Biome currentBiome = Minecraft.getMinecraft().player.getEntityWorld().getBiomeForCoordsBody(playerPosition); //get the biome from the character position
 		String biomeNameString = currentBiome.getBiomeName(); //get the biome name from the biome object
-		String biomeNameJSON= "/title @s title {\"text\":\"" + biomeNameString + "\"}"; //concatenate the minecraft json with the biome name string
+		
 		String currentPhase = event.phase.toString(); //get the phase, only fire on end phases
 		boolean currentSide = event.side.isClient(); //get the side, only fire on clientside ticks
 		int ticksExisted = Minecraft.getMinecraft().player.ticksExisted; //get the number of ticks the player has existed for modulus
