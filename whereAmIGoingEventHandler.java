@@ -69,19 +69,6 @@ public class WhereAmIGoingEventHandler {
 	public String[] excludeBiomesArray = {};
 	public ArrayList<String> excludeBiomesArrayList = new ArrayList <String>(Arrays.asList(excludeBiomesArray)); //have not accounted for
 	
-	/*
-	 * Need to develop event on join world to set game rule "sendCommandFeedback false"
-	 * Confirmation messages write to player chat if rule is not disabled.
-	@SubscribeEvent
-	public void entityJoinWorld(EntityJoinWorldEvent event) {
-		if (event.getEntity() instanceof EntityPlayer) {
-			EntityPlayer player = (EntityPlayer) event.getEntity();
-			//Minecraft.getMinecraft().player.sendChatMessage("/gamerule sendCommandFeedback false");  //this is bad, come back to it.
-		}
-	}
-	*/
-	
-	@SuppressWarnings("null")
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT) //this needs vetted. does it break crap?
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
