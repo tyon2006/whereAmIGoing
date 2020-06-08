@@ -1,7 +1,8 @@
 [
 {
-    "modid": "waig",
+    "modid": "whereamigoing",
     "name": "Where am I going?",
-    "authorList": ["tyon2006"]
+    "authorList": ["tyon2006"],
+	"version": 1.0
 }
 ]

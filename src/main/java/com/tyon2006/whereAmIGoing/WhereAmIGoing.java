@@ -11,12 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.NAME, version = Reference.VERSION)
 public class WhereAmIGoing {
-	
-    public static final String MODID = "waig";
-    public static final String NAME = "Where am I going?";
-    public static final String VERSION = "1.0";
-    public static final String AUTHOR = "tyon2006";
-    
+	    
 	@Instance
 	public static WhereAmIGoing instance;
 	

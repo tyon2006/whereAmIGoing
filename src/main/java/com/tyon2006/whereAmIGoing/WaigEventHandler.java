@@ -43,6 +43,31 @@ public class WaigEventHandler {
 		
 		if (ticksExisted > 100 && ticksExisted % 100 == 0 && currentPhase == "END" && event.side.isClient() == true && biomeNameString != lastBiome){ //mod 100, 20 ticks per second, one check per 5 seconds.	
 			
+			
+			//if checking is disabled
+			if(ConfigManager.disableCategories = true) {
+				
+				if (excludedBiomesArrayList.contains(biomeNameString)) {
+					System.out.println("Skipping biome: " + biomeNameString);
+					return;
+				}
+				
+				colorizedBiomeNameString = TextFormatting.AQUA + biomeNameString;
+				Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
+				//logs
+				if (ConfigManager.enableDebug = true) {
+					System.out.println("Detected biome: " + biomeNameString);
+					System.out.println("Found Biome change on Tick: " + ticksExisted); 			
+					System.out.println("Last biome: " + lastBiome); 
+					System.out.println("Current biome: " + biomeNameString); 
+				}
+				lastBiome = biomeNameString;
+				biomeNameString = "";	
+				return;
+			}
+			
+			
+			//if checking is enabled
 			if (tier1BiomesArrayList.contains(biomeNameString)) {
 				colorizedBiomeNameString = TextFormatting.AQUA + biomeNameString;
 				subTitle = ConfigManager.tier1Subtitle;
@@ -85,12 +110,14 @@ public class WaigEventHandler {
 			Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 			
 			//logs
-			System.out.println("Detected biome: " + biomeNameString);
-			System.out.println("With subtitle: " + subTitle);
-			System.out.println("Found Biome change on Tick: " + ticksExisted); 			
-			System.out.println("Last biome: " + lastBiome); 
-			System.out.println("Current biome: " + biomeNameString); 
-			
+			if (ConfigManager.enableDebug = true) {
+				System.out.println("Detected biome: " + biomeNameString);
+				System.out.println("With subtitle: " + subTitle);
+				System.out.println("Found Biome change on Tick: " + ticksExisted); 			
+				System.out.println("Last biome: " + lastBiome); 
+				System.out.println("Current biome: " + biomeNameString); 
+			}
+
 			//cleanup
 			//lastLastBiome = lastBiome; 
 			lastBiome = biomeNameString;
