@@ -1,4 +1,5 @@
 package com.tyon2006.whereAmIGoing.config;
+import net.minecraftforge.common.config.Config.Type;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,7 +18,7 @@ public class ConfigManager {
 	public static int timeFadeOut = 20;
 	public static int displayWait = 20;
 	
-	public static String[] tier1BiomesArray = {"Birch Forest", "Birch Forest Hills", "Birch Forest Hills M", "Birch Forest M", "Cold Beach", "Cold Taiga", "Cold Taiga Hills", "Cold Taiga M", "Deep Ocean", "Desert", "Desert M", "DesertHills", "Extreme Hills", "Extreme Hills Edge", "Extreme Hills M", "Extreme Hills+", "Extreme Hills+ M", "Flower Forest", "Forest", "ForestHills", "FrozenOcean", "FrozenRiver", "Ice Mountains", "Ice Plains", "Ice Plains Spikes", "Jungle", "Jungle M", "JungleEdge", "JungleEdge M", "JungleHills", "Mega Spruce Taiga", "Mega Taiga", "Mega Taiga Hills", "Mesa", "Mesa (Bryce)", "Mesa Plateau", "Mesa Plateau F", "Mesa Plateau F M", "Mesa Plateau M", "MushroomIsland", "MushroomIslandShore", "Ocean", "Plains", "Redwood Taiga Hills M", "River", "Roofed Forest", "Roofed Forest M", "Savanna", "Savanna M", "Savanna Plateau", "Savanna Plateau M", "Stone Beach", "Sunflower Plains", "Swampland", "Swampland M", "Taiga", "Taiga M", "TaigaHills"};
+	public static String[] tier1BiomesArray = {"Birch Forest", "Birch Forest Hills", "Birch Forest Hills M", "Birch Forest M", "Cold Beach", "Cold Taiga", "Cold Taiga Hills", "Cold Taiga M", "Deep Ocean", "Desert", "Desert M", "DesertHills", "Extreme Hills", "Extreme Hills Edge", "Extreme Hills M", "Extreme Hills+", "Extreme Hills+ M", "Flower Forest", "Forest", "ForestHills", "FrozenOcean", "FrozenRiver", "Ice Mountains", "Ice Plains", "Ice Plains Spikes", "Jungle", "Jungle M", "JungleEdge", "JungleEdge M", "JungleHills", "Mega Spruce Taiga", "Mega Taiga", "Mega Taiga Hills", "Mesa", "Mesa (Bryce)", "Mesa Plateau", "Mesa Plateau F", "Mesa Plateau F M", "Mesa Plateau M", "MushroomIsland", "MushroomIslandShore", "Ocean", "Plains", "Redwood Taiga Hills M", "Roofed Forest", "Roofed Forest M", "Savanna", "Savanna M", "Savanna Plateau", "Savanna Plateau M", "Stone Beach", "Sunflower Plains", "Swampland", "Swampland M", "Taiga", "Taiga M", "TaigaHills"};
 	public static String tier1Subtitle = "Minecraft Overworld";
 
 	public static String[] tier2BiomesArray = {"Bog", "Fen", "Alps", "AlpsFoothills", "Bamboo Forest", "Bayou", "Boreal Forest", "Brushland", "Chaparral", "Cherry Blossom Grove", "Cold Desert", "Coniferous Forest", "Coral Reef", "Crag", "Dead Forest", "Dead Swamp", "Eucalyptus Forest", "Flower Field", "Flower Island", "Glacier", "Grassland", "Gravel Beach", "Grove", "Highland", "Kelp Forest", "Land of Lakes", "Lavender Fields", "Lush Desert", "Lush Swamp", "Mangrove", "Maple Woods", "Marsh", "Meadow", "Moor", "Mountain", "MountainFoothills", "Mystic Grove", "Oasis", "Ominous Woods", "Orchard", "Origin Beach", "Origin Island", "Outback", "Overgrown Cliffs", "Pasture", "Prairie", "Quagmire", "Rainforest", "RedwoodForest", "RedwoodForestEdge", "Sacred Springs", "Seasonal Forest", "Shield", "Shrubland", "Snowy Coniferous Forest", "Snowy Forest", "SnowyTundra", "Steppe", "Temperate Rainforest", "Tropical Island", "Tropical Rainforest", "Tundra", "Volcanic Island", "Wasteland", "Wetland", "White Beach", "Woodland", "Xeric Shrubland"};
@@ -40,11 +41,14 @@ public class ConfigManager {
 	
 	public static String[] excludedBiomesArray = {"River", "Beach"};
 	
+	public static File configFileTemp;
+	
 	public static void init(File configFile) {
 		// TODO Auto-generated method stub
 		if(config == null)
 		{
 			config = new Configuration(configFile);
+			configFileTemp = configFile;
 			load();
 		}
 	}
@@ -89,5 +93,10 @@ public class ConfigManager {
 		{
 			load();
 		}
+	}
+
+	public static void sync() {
+		// TODO Auto-generated method stub
+		init(configFileTemp);
 	}
 }

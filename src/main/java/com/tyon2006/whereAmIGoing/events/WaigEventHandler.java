@@ -1,19 +1,43 @@
 package com.tyon2006.whereAmIGoing.events;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
+import gnu.trove.impl.Constants;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.monster.EntityZombie;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.WeightedRandom;
+import net.minecraft.util.WeightedSpawnerEntity;
+import java.util.Random;
+import net.minecraft.init.MobEffects;
 
 public class WaigEventHandler {
 
@@ -29,6 +53,85 @@ public class WaigEventHandler {
 	public static List<String> tier7BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier7BiomesArray));
 	public static List<String> excludedBiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.excludedBiomesArray));
 	
+	int ticksExisted = 100;
+	int nextTrigger = ticksExisted + ConfigManager.displayWait;
+	
+	/*
+	@SubscribeEvent
+	public void onMobJoinSpawnCheck(LivingSpawnEvent event) {
+		
+		System.out.println("LivingSpawn We trying" + event.getEntity().getEntityId());
+
+		if (event.getEntity() instanceof EntityLiving) {
+			EntityLiving entityLiving = (EntityLiving) event.getEntity();
+		
+		if (entityLiving.isCreatureType(EnumCreatureType.MONSTER, false)) {
+			IAttributeInstance entityAttribute = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+			double maxHealth = entityAttribute.getBaseValue() + 100;
+			entityAttribute.setBaseValue(maxHealth);
+			System.out.println("Living Spawn We did it");
+			}
+		}
+	}
+	*/
+	
+	@SubscribeEvent
+	public void onMobJoinMobCheck(EntityJoinWorldEvent event) {
+		
+		if (event.getEntity() instanceof EntityLiving) {	
+			Entity entity = event.getEntity();
+			EntityLiving entityLiving = (EntityLiving) entity;
+		
+			NBTTagCompound entityNBT = entity.getEntityData();
+			NBTTagCompound healthtag = new NBTTagCompound();
+			
+			/*
+			if (entity.isCreatureType(EnumCreatureType.MONSTER, true))
+			{
+				System.out.println("FOUND A MONSTER");
+			}
+			*/
+			
+			if (entityNBT.hasKey("waighealth")){
+				System.out.println("this muthafucka already bonused");
+				return;
+			}
+			
+			else {
+				System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
+				IAttributeInstance entityHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+				entity.spawnRunningParticles();
+								
+				Random rand = new Random();
+				int randy = rand.nextInt(100);
+				double maxHealth = 0;
+				maxHealth = entityHealth.getBaseValue() + 10;
+				entityNBT.setBoolean("waighealth", true);
+				
+				//entityLiving.writeToNBT(healthtag);	//i think this is bad
+
+				//entityLiving.setHealth((float) maxHealth); //remove this see what happens
+				
+				entityHealth.setBaseValue(maxHealth); //is this what actually increases the health?
+				healthtag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later
+				entityLiving.setCustomNameTag("HEALTH:" + String.valueOf(maxHealth)+ " ID:" + event.getEntity().getEntityId() );
+				
+				if (randy > 95) {
+		            EntityLivingBase mob = entityLiving;
+					System.out.println("WINNER WINNER " + entity.getClass() + " " + entity.getEntityId() + " DINNER. RAND - " + randy);
+					maxHealth = entityHealth.getBaseValue() + 100;
+					entityHealth.setBaseValue(maxHealth); //is this what actually increases the health?
+					entityLiving.setCustomNameTag("Yogar, the Terrible");// + "HEALTH:" + String.valueOf(maxHealth) + " ID:" + event.getEntity().getEntityId() );
+
+		            mob.setGlowing(true);
+		            mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 1000));
+		            //addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
+		            randy=0;
+				}
+			}
+		}
+	}
+	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
@@ -40,23 +143,24 @@ public class WaigEventHandler {
 		String colorizedBiomeNameString = biomeNameString;
 
 		String currentPhase = event.phase.toString(); //get the phase, only fire on end phases
-		int ticksExisted = Minecraft.getMinecraft().player.ticksExisted; //get the number of ticks the player has existed for modulus
-		int nextTrigger = ticksExisted + ConfigManager.displayWait;
+		ticksExisted = Minecraft.getMinecraft().player.ticksExisted; //get the number of ticks the player has existed for modulus
 		
-		if (ticksExisted > 100 && nextTrigger < ticksExisted && currentPhase == "END" && event.side.isClient() == true && biomeNameString != lastBiome){ //mod 100, 20 ticks per second, one check per 5 seconds.	
+		if ((nextTrigger < ticksExisted) && (currentPhase == "END" && event.side.isClient() == true) && (biomeNameString != lastBiome)){ //mod 100, 20 ticks per second, one check per 5 seconds.	
 
 			//if checking is disabled
-			if(ConfigManager.disableCategories = true) {
+			if(ConfigManager.disableCategories == true) {
 				
+				subTitle = "";
 				if (excludedBiomesArrayList.contains(biomeNameString)) {
 					System.out.println("Skipping biome: " + biomeNameString);
 					return;
 				}
 				
 				colorizedBiomeNameString = TextFormatting.AQUA + biomeNameString;
+				Minecraft.getMinecraft().ingameGUI.displayTitle(null, subTitle, 0, 0, 0);
 				Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 				//logs
-				if (ConfigManager.enableDebug = true) {
+				if (ConfigManager.enableDebug == true) {
 					System.out.println("Detected biome: " + biomeNameString);
 					System.out.println("Found Biome change on Tick: " + ticksExisted); 			
 					System.out.println("Last biome: " + lastBiome); 
@@ -111,7 +215,7 @@ public class WaigEventHandler {
 			Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 			
 			//logs
-			if (ConfigManager.enableDebug = true) {
+			if (ConfigManager.enableDebug == true) {
 				System.out.println("Detected biome: " + biomeNameString);
 				System.out.println("With subtitle: " + subTitle);
 				System.out.println("Found Biome change on Tick: " + ticksExisted); 			
