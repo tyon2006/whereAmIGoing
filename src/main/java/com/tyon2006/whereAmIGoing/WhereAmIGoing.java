@@ -1,12 +1,8 @@
 package com.tyon2006.whereAmIGoing;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
-import com.tyon2006.whereAmIGoing.commands.WaigReload;
+//import com.tyon2006.whereAmIGoing.commands.WaigReload;
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 import com.tyon2006.whereAmIGoing.events.WaigEventHandler;
 import com.tyon2006.whereAmIGoing.util.Reference;
@@ -49,7 +45,7 @@ public class WhereAmIGoing {
     public void init(FMLServerStartingEvent event)
     {
       //logger.info("initalise FMLServerStartingEvent :" + Reference.NAME);
-      event.registerServerCommand(new WaigReload());
+      //event.registerServerCommand(new WaigReload()); //apparently you can't get this to happen after the client loads. explains why so many mods have their own customer config files.
     }
 	
 }

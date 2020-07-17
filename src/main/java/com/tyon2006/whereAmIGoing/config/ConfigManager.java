@@ -3,9 +3,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import java.awt.List;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,6 +75,7 @@ public class ConfigManager {
 	public static boolean enableRarespawn;
 	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
+	public static Map<String, String> mobAttSet = new HashMap<String, String>();
 	//public static ArrayList<Map<String, String>> keyToken = new ArrayList<Map<String, String>>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
 	
@@ -143,6 +142,12 @@ public class ConfigManager {
 		init(configFileTemp);
 	}
 	
+	public Map<String, String> getAttributesFromMob(String mobName) {
+		mobAttSet.clear();
+		mobAttSet.putAll(rareSpawnMap.get(mobName));
+		return mobAttSet;
+	}
+	
 	@SuppressWarnings("null")
 	public static void parseRarespawnStringToMap() {
 		int rawArrayLen = rareSpawnArrayRaw.length;
@@ -154,6 +159,7 @@ public class ConfigManager {
 
 		//loop for the length of the input array
 		while(rawArrayCursor < rawArrayLen) {
+			mapSet.clear();
 			tokenCursor = 0;
 			//get the first entry name and assign as the key of map entry
 			token = rareSpawnArrayRaw[rawArrayCursor].split("\\|");
@@ -164,7 +170,7 @@ public class ConfigManager {
 			String mapValue;
 					
 			//get the second entry and assign it as spawnname key
-			mapKey = "spawname";
+			mapKey = "spawnname";
 			mapValue = token[tokenCursor];
 			tokenCursor++;			
 			System.out.println(mapKey + " - namekey");
@@ -195,12 +201,18 @@ public class ConfigManager {
 				System.out.println(mapSet.toString());
 			}
 	
-			rareSpawnMap.put(mobKey, mapSet);
+			//rareSpawnMap.put(mobKey,mapSet);
+			rareSpawnMap.put(mobKey, new HashMap<String, String>() {{putAll(mapSet);}});
+			
+			
 			System.out.println(rareSpawnMap.toString());
-			System.out.println(rareSpawnMap.get("zombie").get("spawnchance"));
+			System.out.println(rareSpawnMap.get("zombie").get("spawnname"));
+			
 			rawArrayCursor++;
 			mapSet.clear();
 			//decrement count
 		}
+		System.out.println(rareSpawnMap.toString());
+		System.out.println(rareSpawnMap.get("zombie").toString());
 	}
 }

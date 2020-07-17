@@ -9,7 +9,6 @@ import java.util.Map;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
-import gnu.trove.impl.Constants;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -83,13 +82,22 @@ public class WaigEventHandler {
 	public void onMobJoinMobCheck(EntityJoinWorldEvent event) {
 		
 		if (event.getEntity() instanceof EntityLiving) {	
+			
+
+			
 			Entity entity = event.getEntity();
 			EntityLiving entityLiving = (EntityLiving) entity;
 		
 			NBTTagCompound entityNBT = entity.getEntityData();
 			NBTTagCompound healthtag = new NBTTagCompound();
 			
+			if (!entity.isCreatureType(EnumCreatureType.MONSTER, true))
+			{
+				return;
+			}
+			
 			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
+			System.out.println(ConfigManager.rareSpawnMap.toString()); 
 			System.out.println(ConfigManager.rareSpawnMap.get("zombie")); 
 			System.out.println(ConfigManager.rareSpawnMap.get("zombie").get("spawnchance"));
 
@@ -98,21 +106,16 @@ public class WaigEventHandler {
 				System.out.println("MAP OUTPUTFOR" + entity.getName().toLowerCase());
 				System.out.println(ConfigManager.rareSpawnMap.toString()); 
 				
-				
 				mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
-				
-				
 				
 				System.out.println(mobAttMap.toString()); 
 				System.out.println(mobAttMap.get("spawnchance")); 
 			}
 			
-			
 			if (entityNBT.hasKey("waighealth")){
 				System.out.println("this muthafucka already bonused");
 				return;
-			}
-			
+			} 
 			else {
 				System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
 				IAttributeInstance entityHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
