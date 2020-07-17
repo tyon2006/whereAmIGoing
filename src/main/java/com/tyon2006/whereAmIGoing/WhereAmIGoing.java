@@ -1,5 +1,9 @@
 package com.tyon2006.whereAmIGoing;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import com.tyon2006.whereAmIGoing.commands.WaigReload;
@@ -26,13 +30,13 @@ public class WhereAmIGoing {
 	public static void PreInit(FMLPreInitializationEvent event)
 	{
     	MinecraftForge.EVENT_BUS.register(new ConfigManager());
-    	ConfigManager.init(event.getSuggestedConfigurationFile());
+    	ConfigManager.init(event.getSuggestedConfigurationFile());    	
 	}
 	
 	@EventHandler
 	public static void Init(FMLInitializationEvent event)
 	{
-
+		
 	}
 	
 	@EventHandler

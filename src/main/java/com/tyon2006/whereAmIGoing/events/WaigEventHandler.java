@@ -3,7 +3,9 @@ package com.tyon2006.whereAmIGoing.events;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
@@ -52,9 +54,10 @@ public class WaigEventHandler {
 	public static List<String> tier6BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier6BiomesArray));
 	public static List<String> tier7BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier7BiomesArray));
 	public static List<String> excludedBiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.excludedBiomesArray));
-	
+
 	int ticksExisted = 100;
 	int nextTrigger = ticksExisted + ConfigManager.displayWait;
+	public static Map<String, String> mobAttMap = new HashMap<String, String>();
 	
 	/*
 	@SubscribeEvent
@@ -75,6 +78,7 @@ public class WaigEventHandler {
 	}
 	*/
 	
+		
 	@SubscribeEvent
 	public void onMobJoinMobCheck(EntityJoinWorldEvent event) {
 		
@@ -85,12 +89,24 @@ public class WaigEventHandler {
 			NBTTagCompound entityNBT = entity.getEntityData();
 			NBTTagCompound healthtag = new NBTTagCompound();
 			
-			/*
-			if (entity.isCreatureType(EnumCreatureType.MONSTER, true))
+			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
+			System.out.println(ConfigManager.rareSpawnMap.get("zombie")); 
+			System.out.println(ConfigManager.rareSpawnMap.get("zombie").get("spawnchance"));
+
+			if (entity.isCreatureType(EnumCreatureType.MONSTER, true) && ConfigManager.rareSpawnMap.containsKey(entity.getName().toLowerCase()))
 			{
-				System.out.println("FOUND A MONSTER");
+				System.out.println("MAP OUTPUTFOR" + entity.getName().toLowerCase());
+				System.out.println(ConfigManager.rareSpawnMap.toString()); 
+				
+				
+				mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
+				
+				
+				
+				System.out.println(mobAttMap.toString()); 
+				System.out.println(mobAttMap.get("spawnchance")); 
 			}
-			*/
+			
 			
 			if (entityNBT.hasKey("waighealth")){
 				System.out.println("this muthafucka already bonused");
@@ -116,7 +132,7 @@ public class WaigEventHandler {
 				healthtag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later
 				entityLiving.setCustomNameTag("HEALTH:" + String.valueOf(maxHealth)+ " ID:" + event.getEntity().getEntityId() );
 				
-				if (randy > 95) {
+				if (randy > 10) {
 		            EntityLivingBase mob = entityLiving;
 					System.out.println("WINNER WINNER " + entity.getClass() + " " + entity.getEntityId() + " DINNER. RAND - " + randy);
 					maxHealth = entityHealth.getBaseValue() + 100;
@@ -126,46 +142,52 @@ public class WaigEventHandler {
 		            mob.setGlowing(true);
 		            mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 1000));
 		            //addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
-		            randy=0;
+		            randy = 0;
+		            mobAttMap.clear();
 				}
 			}
+			}
 		}
-	}
 	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
-	 	if(Minecraft.getMinecraft().player == null) return; //it will crash on title screen without this line.
+
+		if(Minecraft.getMinecraft().player == null) return; //it will crash on title screen without this line.
 	 	
 		BlockPos playerPosition = Minecraft.getMinecraft().player.getPosition(); //get the position of the character
 		Biome currentBiome = Minecraft.getMinecraft().player.getEntityWorld().getBiomeForCoordsBody(playerPosition); //get the biome from the character position
-		String biomeNameString = currentBiome. getBiomeName(); //get the biome name from the biome object
+		
+		String biomeNameString = currentBiome. getBiomeName(); 
 		String colorizedBiomeNameString = biomeNameString;
 
-		String currentPhase = event.phase.toString(); //get the phase, only fire on end phases
-		ticksExisted = Minecraft.getMinecraft().player.ticksExisted; //get the number of ticks the player has existed for modulus
+		String currentPhase = event.phase.toString();
+		ticksExisted = Minecraft.getMinecraft().player.ticksExisted;
 		
-		if ((nextTrigger < ticksExisted) && (currentPhase == "END" && event.side.isClient() == true) && (biomeNameString != lastBiome)){ //mod 100, 20 ticks per second, one check per 5 seconds.	
+		if ((nextTrigger < ticksExisted) && (currentPhase == "END" && event.side.isClient() == true) && (biomeNameString != lastBiome)){	
 
 			//if checking is disabled
 			if(ConfigManager.disableCategories == true) {
 				
 				subTitle = "";
+				
 				if (excludedBiomesArrayList.contains(biomeNameString)) {
 					System.out.println("Skipping biome: " + biomeNameString);
+					nextTrigger = ticksExisted + ConfigManager.displayWait;
 					return;
-				}
+				} 
 				
 				colorizedBiomeNameString = TextFormatting.AQUA + biomeNameString;
 				Minecraft.getMinecraft().ingameGUI.displayTitle(null, subTitle, 0, 0, 0);
 				Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
-				//logs
+
 				if (ConfigManager.enableDebug == true) {
 					System.out.println("Detected biome: " + biomeNameString);
 					System.out.println("Found Biome change on Tick: " + ticksExisted); 			
 					System.out.println("Last biome: " + lastBiome); 
 					System.out.println("Current biome: " + biomeNameString); 
 				}
+
 				lastBiome = biomeNameString;
 				biomeNameString = "";
 				nextTrigger = ticksExisted + ConfigManager.displayWait;
@@ -173,7 +195,12 @@ public class WaigEventHandler {
 			}
 			
 			//if checking is enabled
-			if (tier1BiomesArrayList.contains(biomeNameString)) {
+			if (excludedBiomesArrayList.contains(biomeNameString)) {
+				System.out.println("Skipping biome: " + biomeNameString);
+				nextTrigger = ticksExisted + ConfigManager.displayWait;
+				return;
+			} 
+			else if (tier1BiomesArrayList.contains(biomeNameString)) {
 				colorizedBiomeNameString = TextFormatting.AQUA + biomeNameString;
 				subTitle = ConfigManager.tier1Subtitle;
 			} 
@@ -201,10 +228,6 @@ public class WaigEventHandler {
 				colorizedBiomeNameString = TextFormatting.LIGHT_PURPLE + biomeNameString;
 				subTitle = ConfigManager.tier7Subtitle;
 			}  
-			else if (excludedBiomesArrayList.contains(biomeNameString)) {
-				System.out.println("Skipping biome: " + biomeNameString);
-				return;
-			} 
 			else {
 				colorizedBiomeNameString = TextFormatting.OBFUSCATED + biomeNameString;
 				subTitle = "Unknown Biome";
@@ -224,7 +247,6 @@ public class WaigEventHandler {
 			}
 
 			//cleanup
-			//lastLastBiome = lastBiome; 
 			lastBiome = biomeNameString;
 			biomeNameString = "";
 			subTitle = "";		
