@@ -86,9 +86,11 @@ public class WaigRareSpawnHandler {
 	*/
 		
 	@SubscribeEvent (priority = EventPriority.LOWEST)
-	@SideOnly (Side.SERVER)
-	public void onMobJoinDoRarespawn(EntityJoinWorldEvent event) {
-		
+	//@SideOnly (Side.SERVER)
+	//public void onMobJoinDoRarespawn(EntityJoinWorldEvent event) {	
+	public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
+        if (event.getWorld().isRemote) return;
+        
 		if (event.getEntity() instanceof EntityLiving) {	
 			
 			Entity entity = event.getEntity();

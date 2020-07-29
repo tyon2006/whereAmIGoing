@@ -42,6 +42,7 @@ import net.minecraft.world.BossInfo;
 
 public class WaigEventHandler {
 
+
 	public String subTitle = "";
 	public String lastBiome = "";
 	
