@@ -1,6 +1,6 @@
 package com.tyon2006.whereAmIGoing.events;
 
-import java.sql.Time;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
@@ -24,12 +23,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -39,6 +38,7 @@ import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedSpawnerEntity;
 import java.util.Random;
 import net.minecraft.init.MobEffects;
+import net.minecraft.world.BossInfo;
 
 public class WaigEventHandler {
 
@@ -56,102 +56,8 @@ public class WaigEventHandler {
 
 	int ticksExisted = 100;
 	int nextTrigger = ticksExisted + ConfigManager.displayWait;
-	public static Map<String, String> mobAttMap = new HashMap<String, String>();
-	
-	/*
-	@SubscribeEvent
-	public void onMobJoinSpawnCheck(LivingSpawnEvent event) {
-		
-		System.out.println("LivingSpawn We trying" + event.getEntity().getEntityId());
 
-		if (event.getEntity() instanceof EntityLiving) {
-			EntityLiving entityLiving = (EntityLiving) event.getEntity();
 		
-		if (entityLiving.isCreatureType(EnumCreatureType.MONSTER, false)) {
-			IAttributeInstance entityAttribute = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-			double maxHealth = entityAttribute.getBaseValue() + 100;
-			entityAttribute.setBaseValue(maxHealth);
-			System.out.println("Living Spawn We did it");
-			}
-		}
-	}
-	*/
-	
-		
-	@SubscribeEvent
-	public void onMobJoinMobCheck(EntityJoinWorldEvent event) {
-		
-		if (event.getEntity() instanceof EntityLiving) {	
-			
-
-			
-			Entity entity = event.getEntity();
-			EntityLiving entityLiving = (EntityLiving) entity;
-		
-			NBTTagCompound entityNBT = entity.getEntityData();
-			NBTTagCompound healthtag = new NBTTagCompound();
-			
-			if (!entity.isCreatureType(EnumCreatureType.MONSTER, true))
-			{
-				return;
-			}
-			
-			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
-			System.out.println(ConfigManager.rareSpawnMap.toString()); 
-			System.out.println(ConfigManager.rareSpawnMap.get("zombie")); 
-			System.out.println(ConfigManager.rareSpawnMap.get("zombie").get("spawnchance"));
-
-			if (entity.isCreatureType(EnumCreatureType.MONSTER, true) && ConfigManager.rareSpawnMap.containsKey(entity.getName().toLowerCase()))
-			{
-				System.out.println("MAP OUTPUTFOR" + entity.getName().toLowerCase());
-				System.out.println(ConfigManager.rareSpawnMap.toString()); 
-				
-				mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
-				
-				System.out.println(mobAttMap.toString()); 
-				System.out.println(mobAttMap.get("spawnchance")); 
-			}
-			
-			if (entityNBT.hasKey("waighealth")){
-				System.out.println("this muthafucka already bonused");
-				return;
-			} 
-			else {
-				System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
-				IAttributeInstance entityHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-				entity.spawnRunningParticles();
-								
-				Random rand = new Random();
-				int randy = rand.nextInt(100);
-				double maxHealth = 0;
-				maxHealth = entityHealth.getBaseValue() + 10;
-				entityNBT.setBoolean("waighealth", true);
-				
-				//entityLiving.writeToNBT(healthtag);	//i think this is bad
-
-				//entityLiving.setHealth((float) maxHealth); //remove this see what happens
-				
-				entityHealth.setBaseValue(maxHealth); //is this what actually increases the health?
-				healthtag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later
-				entityLiving.setCustomNameTag("HEALTH:" + String.valueOf(maxHealth)+ " ID:" + event.getEntity().getEntityId() );
-				
-				if (randy > 10) {
-		            EntityLivingBase mob = entityLiving;
-					System.out.println("WINNER WINNER " + entity.getClass() + " " + entity.getEntityId() + " DINNER. RAND - " + randy);
-					maxHealth = entityHealth.getBaseValue() + 100;
-					entityHealth.setBaseValue(maxHealth); //is this what actually increases the health?
-					entityLiving.setCustomNameTag("Yogar, the Terrible");// + "HEALTH:" + String.valueOf(maxHealth) + " ID:" + event.getEntity().getEntityId() );
-
-		            mob.setGlowing(true);
-		            mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 1000));
-		            //addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
-		            randy = 0;
-		            mobAttMap.clear();
-				}
-			}
-			}
-		}
-	
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
@@ -161,7 +67,7 @@ public class WaigEventHandler {
 		BlockPos playerPosition = Minecraft.getMinecraft().player.getPosition(); //get the position of the character
 		Biome currentBiome = Minecraft.getMinecraft().player.getEntityWorld().getBiomeForCoordsBody(playerPosition); //get the biome from the character position
 		
-		String biomeNameString = currentBiome. getBiomeName(); 
+		String biomeNameString = currentBiome.getBiomeName(); 
 		String colorizedBiomeNameString = biomeNameString;
 
 		String currentPhase = event.phase.toString();

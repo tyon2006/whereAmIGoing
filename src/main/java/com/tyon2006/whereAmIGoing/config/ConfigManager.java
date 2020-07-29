@@ -12,6 +12,8 @@ public class ConfigManager {
 	public static Configuration config;
 	
 	public static boolean disableCategories = false;
+	public static boolean enableBiomeNav = true;
+	public static boolean enableRarespawn = true;
 	public static boolean enableDebug = false;
 	
 	public static int timeFadeIn = 20;
@@ -72,7 +74,8 @@ public class ConfigManager {
 	
 	public static File configFileTemp;
 
-	public static boolean enableRarespawn;
+
+	public static float rareSpawnXPboost;
 	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
@@ -94,6 +97,7 @@ public class ConfigManager {
 		enableRarespawn = config.getBoolean("Enable Rarespawn Module?", "0Main", true, "Enables rarespawn module. Note, requires configuration below.");
 		disableCategories = config.getBoolean("Disable Categories?", "0Main", false, "Setting this value to true will disable all biome checking, categorization, and subtitles (except ignored to help prevent biome spam). Instead all biome names will display as they are approached in aqua and with no subtitle. Nice for big modpacks with tons and tons of biomes you don't feel like configuring and you just want to know where you're going. See what I did there? :)");
 		enableDebug = config.getBoolean("Enable Debug?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
+		enableBiomeNav = config.getBoolean("Enable Biome Navigation Display?", "0Main", true, "Enabling this turn on the displaying of biome titles as you transition between them.");
 		
 		timeFadeIn = config.getInt("Fade in Time", "Title Display Timings", timeFadeIn, 0, 100, "Amount of time it takes for the title to fade in. 0 will appear instantly and higher numbers will fade in more slowly. Whole number value measured in ticks (20 per second)");
 		displayTime = config.getInt("Display Time", "Title Display Timings", displayTime, 0, 100, "Amount of time the title displays at full opacity after fading in. 0 will instantly begin the fade out action and higher numbers will display for longer time. Whole number value measured in ticks (20 per second)");
@@ -101,6 +105,7 @@ public class ConfigManager {
 		displayWait = config.getInt("Time between Updates", "Title Display Timings", displayWait, 20, 1200, "Amount of time to wait until displaying the title again. Lower numbers will display updates faster/more often with higher numbers displaying less often. Whole number value measured in ticks (20 per second)");
 		
 		rareSpawnArrayRaw = config.getStringList("Rarespawn Entries", "Rarespawn", rareSpawnArrayRaw, "Enter 1 line per mob starting with the name of the mob, then name, then the percent chance of spawning, followed by attritbute name and value pairs.");
+		rareSpawnXPboost = config.getFloat("Rarespawn XP Booster", "Rarespawn", rareSpawnXPboost, 0.1f, 1000.0f, "When a Rarespawn is killed, it will drop its default XP value times the number provided here. Accepts float values.");
 		
 		tier1Subtitle = config.getString("Category 1 Title", "Biome Category Names", tier1Subtitle, "Words that display at the subtitle of Category 1 biomes.");
 		tier2Subtitle = config.getString("Category 2 Title", "Biome Category Names", tier2Subtitle, "Words that display at the subtitle of Category 2 biomes.");
@@ -203,16 +208,11 @@ public class ConfigManager {
 	
 			//rareSpawnMap.put(mobKey,mapSet);
 			rareSpawnMap.put(mobKey, new HashMap<String, String>() {{putAll(mapSet);}});
-			
-			
-			System.out.println(rareSpawnMap.toString());
-			System.out.println(rareSpawnMap.get("zombie").get("spawnname"));
-			
+						
 			rawArrayCursor++;
 			mapSet.clear();
 			//decrement count
 		}
 		System.out.println(rareSpawnMap.toString());
-		System.out.println(rareSpawnMap.get("zombie").toString());
 	}
 }

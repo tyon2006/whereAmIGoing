@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 //import com.tyon2006.whereAmIGoing.commands.WaigReload;
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 import com.tyon2006.whereAmIGoing.events.WaigEventHandler;
+import com.tyon2006.whereAmIGoing.events.WaigRareSpawnHandler;
 import com.tyon2006.whereAmIGoing.util.Reference;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -38,13 +39,14 @@ public class WhereAmIGoing {
 	@EventHandler
 	public static void PostInit(FMLPostInitializationEvent event)
 	{
-		MinecraftForge.EVENT_BUS.register(new WaigEventHandler());
+		if(ConfigManager.enableBiomeNav==true) MinecraftForge.EVENT_BUS.register(new WaigEventHandler());
+		if(ConfigManager.enableRarespawn==true) MinecraftForge.EVENT_BUS.register(new WaigRareSpawnHandler());
 	}
 	
     @EventHandler
     public void init(FMLServerStartingEvent event)
     {
-      //logger.info("initalise FMLServerStartingEvent :" + Reference.NAME);
+      //logger.info("initialize FMLServerStartingEvent :" + Reference.NAME);
       //event.registerServerCommand(new WaigReload()); //apparently you can't get this to happen after the client loads. explains why so many mods have their own customer config files.
     }
 	
