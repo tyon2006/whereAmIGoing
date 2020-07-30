@@ -79,7 +79,6 @@ public class ConfigManager {
 	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
-	//public static ArrayList<Map<String, String>> keyToken = new ArrayList<Map<String, String>>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
 	
 	public static void init(File configFile) {
