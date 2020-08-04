@@ -22,12 +22,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -52,38 +55,6 @@ public class WaigRareSpawnHandler {
 		//e.getRenderer().prepareScale(entitylivingbaseIn, partialTicks);
 	}
 	*/
-	
-	/*
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
-		
-
-		if (event.getEntity() instanceof EntityLiving) {	
-			Entity entity = event.getEntity();
-			Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
-			String biomeName = mobInBiome.getBiomeName();
-			EntityLiving entityLiving = (EntityLiving) entity;
-			NBTTagCompound entityNBT = entity.getEntityData();
-			NBTTagCompound biomeTag = new NBTTagCompound();
-			if (entityNBT.hasKey("waigBiomeLevelChecked")){
-				System.out.println("this sumbitch already been biomed");
-				return;
-			}
-			
-			if (tier1BiomesArrayList.contains(biomeName)) {
-				entityNBT.setBoolean("waigBiomeLevelChecked", true); //tag the mob so it doesn't get modified later
-				//entityLiving.writeToNBT(biomeTag);	//i think this is bad
-				IAttributeInstance entityHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-				double maxHealth = 0;
-				maxHealth = entityHealth.getBaseValue() + 100;
-				entityHealth.setBaseValue(maxHealth);
-				entityLiving.setCustomNameTag(entity.getName() + " " + biomeName + " " + maxHealth + " " + entity.getEntityData().toString());// + "HEALTH:" + String.valueOf(maxHealth) + " ID:" + event.getEntity().getEntityId() );
-				entity.setAlwaysRenderNameTag(true);
-			}
-		} 
-		return;
-	}
-	*/
 		
 	@SubscribeEvent (priority = EventPriority.HIGH)
 	//@SideOnly (Side.SERVER) //this breaks it
@@ -104,6 +75,7 @@ public class WaigRareSpawnHandler {
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = entity.getEntityData();
 		NBTTagCompound healthtag = new NBTTagCompound();
+		NBTTagCompound tag = new NBTTagCompound();
 		
 		healthtag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later
 		
@@ -144,6 +116,7 @@ public class WaigRareSpawnHandler {
 			//healthtag.setBoolean("waigIsRare", true);
 			//entityNBT.setTag("waigIsRare", healthtag);
 			entityNBT.setBoolean("waigIsRare", true); //this is the good one. thanks kindlich!
+			entityNBT.setString("waigMobName", entity.getName().toLowerCase());
 			
 			entityLiving.setCustomNameTag(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnname"));// + "HEALTH:" + " ID:" + event.getEntity().getEntityId() );
 			entity.setAlwaysRenderNameTag(true);
@@ -159,7 +132,7 @@ public class WaigRareSpawnHandler {
 		}
 	
 	@SubscribeEvent
-    public void dropXP(LivingExperienceDropEvent e){
+    public void rareDropXP(LivingExperienceDropEvent e){
 		
 		if(!(e.getEntityLiving() instanceof EntityLiving))return;
 		NBTTagCompound entityNBT = e.getEntity().getEntityData();
@@ -171,8 +144,52 @@ public class WaigRareSpawnHandler {
 			
 		if(entityNBT.getBoolean("waigIsRare"));
 		{
-			System.out.println("DROP TIME");
+			System.out.println("XP DROP TIME");
 			e.setDroppedExperience(e.getDroppedExperience()*5);
+			return;
+		} 
+	}
+	
+	@SubscribeEvent
+	public void rareDropItem(LivingDropsEvent e) {
+		if(!(e.getEntityLiving() instanceof EntityLiving))return;
+		NBTTagCompound entityNBT = e.getEntity().getEntityData();
+		//System.out.println(entityNBT.toString());
+		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
+			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
+			return;
+		}
+		System.out.println(e.getEntity().getName().toLowerCase());
+		System.out.println(e.getEntityLiving().getEntityData().getString("waigMobName"));
+		mobAttMap.putAll(ConfigManager.rareSpawnMap.get(e.getEntityLiving().getEntityData().getString("waigMobName")));
+		
+		if(entityNBT.getBoolean("waigIsRare") 
+				&& mobAttMap.containsKey("drops")
+				&& mobAttMap.get("drops") != null);
+		{	
+			String dropsString = mobAttMap.get("drops");
+			
+			System.out.println(dropsString);
+			String dropModIDString = dropsString.substring(0, dropsString.indexOf(':'));
+			String dropItemIDString = dropsString.substring(0, dropsString.indexOf(".")-1);
+			String dropNBTString = dropsString.substring(dropsString.indexOf("{"), dropsString.indexOf("}")-1);
+
+			if (ConfigManager.enableDebug == true) {
+				System.out.println("ITEM DROP TIME");
+				System.out.println(dropModIDString);
+				System.out.println(dropItemIDString);
+				System.out.println(dropNBTString);
+			}
+			
+			List<EntityItem> rareDropList = e.getDrops();
+			rareDropList.clear();
+			new Item();
+			Item dropItem = Item.getByNameOrId(mobAttMap.get("drops"));
+			NBTTagCompound dropNBT = null;
+			ItemStack rareDrop = new ItemStack(dropItem, 1, 0, dropNBT);
+			EntityItem entityItemDrop = new EntityItem(e.getEntity().world, e.getEntity().posX, e.getEntity().posY, e.getEntity().posZ, rareDrop);
+			//rareDropList.add(mobAttMap.get("drops").to);
+			e.getDrops().add(entityItemDrop);
 			return;
 		} 
 	}

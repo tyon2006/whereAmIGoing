@@ -83,13 +83,16 @@ public class ConfigManager {
 	public static String tier15Subtitle = "";	
 	public static String[] tier15BiomesDifficultyArray = {"0", "0", "0", "0"};
 	
+	public static String[] tier16BiomesArray = {""};
+	public static String tier16Subtitle = "";	
+	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0"};
+	
 	public static String[] excludedBiomesArray = {"River", "Beach", "Frozen River"};
 	
 	public static File configFileTemp;
 
-
 	public static float rareSpawnXPboost;
-	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20"};
+	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20|drops|minecraft:grass"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
@@ -135,22 +138,24 @@ public class ConfigManager {
 		tier13Subtitle = config.getString("Category 13 Title", "Biome Category Names", tier13Subtitle, "Words that display at the subtitle of Category 13 biomes.");
 		tier14Subtitle = config.getString("Category 14 Title", "Biome Category Names", tier14Subtitle, "Words that display at the subtitle of Category 14 biomes.");
 		tier15Subtitle = config.getString("Category 15 Title", "Biome Category Names", tier15Subtitle, "Words that display at the subtitle of Category 15 biomes.");
+		tier16Subtitle = config.getString("Category 16 Title", "Biome Category Names", tier16Subtitle, "Words that display at the subtitle of Category 16 biomes.");
 
-		tier1BiomesArray = config.getStringList("Category 1 Biomes (aqua)", "Biome Sets", tier1BiomesArray, "Contains an array of biome name strings to display in category 1 biomes.");
-		tier2BiomesArray = config.getStringList("Category 2 Biomes (green)", "Biome Sets", tier2BiomesArray, "Contains an array of biome name strings to display in category 2 biomes.");
-		tier3BiomesArray = config.getStringList("Category 3 Biomes (yellow)", "Biome Sets", tier3BiomesArray, "Contains an array of biome name strings to display in category 3 biomes.");
-		tier4BiomesArray = config.getStringList("Category 4 Biomes (gold)", "Biome Sets", tier4BiomesArray, "Contains an array of biome name strings to display in category 4 biomes.");
-		tier5BiomesArray = config.getStringList("Category 5 Biomes (red)", "Biome Sets", tier5BiomesArray, "Contains an array of biome name strings to display in category 5 biomes.");
-		tier6BiomesArray = config.getStringList("Category 6 Biomes (dark red)", "Biome Sets", tier6BiomesArray, "Contains an array of biome name strings to display in category 6 biomes.");
-		tier7BiomesArray = config.getStringList("Category 7 Biomes (light purple)", "Biome Sets", tier7BiomesArray, "Contains an array of biome name strings to display in category 7 biomes.");
-		tier8BiomesArray = config.getStringList("Category 8 Biomes (dark_green)", "Biome Sets", tier8BiomesArray, "Contains an array of biome name strings to display in category 1 biomes.");
-		tier9BiomesArray = config.getStringList("Category 9 Biomes (dark_aqua)", "Biome Sets", tier9BiomesArray, "Contains an array of biome name strings to display in category 2 biomes.");
-		tier10BiomesArray = config.getStringList("Category 10 Biomes (dark_blue)", "Biome Sets", tier10BiomesArray, "Contains an array of biome name strings to display in category 3 biomes.");
-		tier11BiomesArray = config.getStringList("Category 11 Biomes (dark_purple)", "Biome Sets", tier11BiomesArray, "Contains an array of biome name strings to display in category 4 biomes.");
-		tier12BiomesArray = config.getStringList("Category 12 Biomes (white)", "Biome Sets", tier12BiomesArray, "Contains an array of biome name strings to display in category 5 biomes.");
-		tier13BiomesArray = config.getStringList("Category 13 Biomes (gray)", "Biome Sets", tier13BiomesArray, "Contains an array of biome name strings to display in category 6 biomes.");
-		tier14BiomesArray = config.getStringList("Category 14 Biomes (dark_grey)", "Biome Sets", tier14BiomesArray, "Contains an array of biome name strings to display in category 5 biomes.");
-		tier15BiomesArray = config.getStringList("Category 15 Biomes (black)", "Biome Sets", tier15BiomesArray, "Contains an array of biome name strings to display in category 6 biomes.");
+		tier1BiomesArray = config.getStringList("Category 1 Biomes (aqua)", "Biome Sets", tier1BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier2BiomesArray = config.getStringList("Category 2 Biomes (green)", "Biome Sets", tier2BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier3BiomesArray = config.getStringList("Category 3 Biomes (yellow)", "Biome Sets", tier3BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier4BiomesArray = config.getStringList("Category 4 Biomes (gold)", "Biome Sets", tier4BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier5BiomesArray = config.getStringList("Category 5 Biomes (red)", "Biome Sets", tier5BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier6BiomesArray = config.getStringList("Category 6 Biomes (dark red)", "Biome Sets", tier6BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier7BiomesArray = config.getStringList("Category 7 Biomes (light purple)", "Biome Sets", tier7BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier8BiomesArray = config.getStringList("Category 8 Biomes (dark_green)", "Biome Sets", tier8BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier9BiomesArray = config.getStringList("Category 9 Biomes (dark_aqua)", "Biome Sets", tier9BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier10BiomesArray = config.getStringList("Category 10 Biomes (dark_blue)", "Biome Sets", tier10BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier11BiomesArray = config.getStringList("Category 11 Biomes (dark_purple)", "Biome Sets", tier11BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier12BiomesArray = config.getStringList("Category 12 Biomes (white)", "Biome Sets", tier12BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier13BiomesArray = config.getStringList("Category 13 Biomes (gray)", "Biome Sets", tier13BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier14BiomesArray = config.getStringList("Category 14 Biomes (dark_grey)", "Biome Sets", tier14BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier15BiomesArray = config.getStringList("Category 15 Biomes (black)", "Biome Sets", tier15BiomesArray, "Contains an array of biome name strings to display in this category.");
+		tier16BiomesArray = config.getStringList("Category 16 Biomes (blue)", "Biome Sets", tier16BiomesArray, "Contains an array of biome name strings to display in this category.");
 		
 		tier1BiomesDifficultyArray = config.getStringList("Category 1 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier1BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
 		tier2BiomesDifficultyArray = config.getStringList("Category 2 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier2BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
@@ -167,7 +172,8 @@ public class ConfigManager {
 		tier13BiomesDifficultyArray = config.getStringList("Category 13 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier13BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
 		tier14BiomesDifficultyArray = config.getStringList("Category 14 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier14BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
 		tier15BiomesDifficultyArray = config.getStringList("Category 15 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier15BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		
+		tier16BiomesDifficultyArray = config.getStringList("Category 16 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier16BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+				
 		excludedBiomesArray = config.getStringList("Ignored Biomes", "Biome Sets", excludedBiomesArray, "Contains an array of biome name strings that will be ignored by this mod's features." );
 				
 		if (config.hasChanged())
@@ -215,7 +221,9 @@ public class ConfigManager {
 			//get the first entry name and assign as the key of map entry
 			token = rareSpawnArrayRaw[rawArrayCursor].split("\\|");
 			mobKey = token[tokenCursor];
-			System.out.println(mobKey + " - FORMOB");
+			if (enableDebug == true) {
+				System.out.println(mobKey + " - FORMOB");
+			}
 			tokenCursor++;
 			String mapKey;
 			String mapValue;
@@ -224,32 +232,41 @@ public class ConfigManager {
 			mapKey = "spawnname";
 			mapValue = token[tokenCursor];
 			tokenCursor++;			
-			System.out.println(mapKey + " - namekey");
-			System.out.println(mapValue + " - value");
+
 			mapSet.put(mapKey, mapValue);
-			System.out.println(mapSet.toString());
+			if (enableDebug == true) {
+				System.out.println(mapKey + " - namekey");
+				System.out.println(mapValue + " - value");
+				System.out.println(mapSet.toString());
+			}
 
 			//get the third entry and assign it with the spawn% key
 			mapKey = "spawnchance";
 			mapValue = token[tokenCursor];
 			tokenCursor++;
-			System.out.println(mapKey + " - chancekey");
-			System.out.println(mapValue + " - value");
+
 			mapSet.put(mapKey, mapValue);
 			mapSet.toString();
-			System.out.println(mapSet.toString());
-
-			//count and loop through all the remaining values
 			
+			if (enableDebug == true) {
+				System.out.println(mapKey + " - chancekey");
+				System.out.println(mapValue + " - value");
+				System.out.println(mapSet.toString());
+			}
+			
+			//count and loop through all the remaining values
 			while(tokenCursor < token.length) {
 				mapKey = token[tokenCursor];
 				tokenCursor++;
 				mapValue = token[tokenCursor];
 				tokenCursor++;
-				System.out.println(mapKey + " - key");
-				System.out.println(mapValue + " - value");
+				
+				if (enableDebug == true) {
+					System.out.println(mapKey + " - key");
+					System.out.println(mapValue + " - value");
+					System.out.println(mapSet.toString());
+				}
 				mapSet.put(mapKey, mapValue);
-				System.out.println(mapSet.toString());
 			}
 	
 			//rareSpawnMap.put(mobKey,mapSet);

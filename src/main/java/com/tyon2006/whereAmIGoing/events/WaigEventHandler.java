@@ -45,6 +45,7 @@ public class WaigEventHandler {
 
 	public String subTitle = "";
 	public String lastBiome = "";
+	public String lastLastBiome = "";
 	
 	public static List<String> tier1BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier1BiomesArray));
 	public static List<String> tier2BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier2BiomesArray));
@@ -53,12 +54,21 @@ public class WaigEventHandler {
 	public static List<String> tier5BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier5BiomesArray));
 	public static List<String> tier6BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier6BiomesArray));
 	public static List<String> tier7BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier7BiomesArray));
+	public static List<String> tier8BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier8BiomesArray));
+	public static List<String> tier9BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier9BiomesArray));
+	public static List<String> tier10BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier10BiomesArray));
+	public static List<String> tier11BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier11BiomesArray));
+	public static List<String> tier12BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier12BiomesArray));
+	public static List<String> tier13BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier13BiomesArray));
+	public static List<String> tier14BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier14BiomesArray));
+	public static List<String> tier15BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier15BiomesArray));
+	public static List<String> tier16BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier16BiomesArray));
+	
 	public static List<String> excludedBiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.excludedBiomesArray));
 
 	int ticksExisted = 100;
 	int nextTrigger = ticksExisted + ConfigManager.displayWait;
 
-		
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
@@ -74,7 +84,11 @@ public class WaigEventHandler {
 		String currentPhase = event.phase.toString();
 		ticksExisted = Minecraft.getMinecraft().player.ticksExisted;
 		
-		if ((nextTrigger < ticksExisted) && (currentPhase == "END" && event.side.isClient() == true) && (biomeNameString != lastBiome)){	
+		if ((nextTrigger < ticksExisted) 
+				&& (currentPhase == "END"
+				//&& event.side.isClient() == true) 
+				&& biomeNameString != lastBiome)
+				&& biomeNameString != lastLastBiome){	
 
 			//if checking is disabled
 			if(ConfigManager.disableCategories == true) {
@@ -93,9 +107,7 @@ public class WaigEventHandler {
 
 				if (ConfigManager.enableDebug == true) {
 					System.out.println("Detected biome: " + biomeNameString);
-					System.out.println("Found Biome change on Tick: " + ticksExisted); 			
-					System.out.println("Last biome: " + lastBiome); 
-					System.out.println("Current biome: " + biomeNameString); 
+					System.out.println("Found Biome change on Tick: " + ticksExisted); 			 
 				}
 
 				lastBiome = biomeNameString;
@@ -138,25 +150,60 @@ public class WaigEventHandler {
 				colorizedBiomeNameString = TextFormatting.LIGHT_PURPLE + biomeNameString;
 				subTitle = ConfigManager.tier7Subtitle;
 			}  
+			else if (tier8BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.DARK_GREEN + biomeNameString;
+				subTitle = ConfigManager.tier8Subtitle;
+			} 
+			else if (tier9BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.DARK_AQUA + biomeNameString;
+				subTitle = ConfigManager.tier9Subtitle;
+			} 
+			else if (tier10BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.DARK_BLUE + biomeNameString;
+				subTitle = ConfigManager.tier10Subtitle;
+			} 
+			else if (tier11BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.DARK_PURPLE + biomeNameString;
+				subTitle = ConfigManager.tier11Subtitle;
+			} 
+			else if (tier12BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.WHITE + biomeNameString;
+				subTitle = ConfigManager.tier12Subtitle;
+			} 
+			else if (tier13BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.GRAY + biomeNameString;
+				subTitle = ConfigManager.tier13Subtitle;
+			}  
+			else if (tier14BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.DARK_GRAY + biomeNameString;
+				subTitle = ConfigManager.tier14Subtitle;
+			} 
+			else if (tier15BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.BLACK + biomeNameString;
+				subTitle = ConfigManager.tier15Subtitle;
+			} 
+			else if (tier16BiomesArrayList.contains(biomeNameString)) {
+				colorizedBiomeNameString = TextFormatting.BLUE + biomeNameString;
+				subTitle = ConfigManager.tier16Subtitle;
+			} 
 			else {
 				colorizedBiomeNameString = TextFormatting.OBFUSCATED + biomeNameString;
 				subTitle = "Unknown Biome";
 			}
 			
-			//why the hell do I have to assign the subtitle before the title? The sub ends up being blank if I don't structure it like this. Cmon minecraft. 
+			//The sub ends up being blank if I don't structure it like this. 
 			Minecraft.getMinecraft().ingameGUI.displayTitle(null, subTitle, 0, 0, 0);
 			Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 			
 			//logs
 			if (ConfigManager.enableDebug == true) {
-				System.out.println("Detected biome: " + biomeNameString);
-				System.out.println("With subtitle: " + subTitle);
-				System.out.println("Found Biome change on Tick: " + ticksExisted); 			
 				System.out.println("Last biome: " + lastBiome); 
+				System.out.println("Last last biome: " + lastLastBiome); 
 				System.out.println("Current biome: " + biomeNameString); 
 			}
 
 			//cleanup
+			lastLastBiome = lastBiome;
 			lastBiome = biomeNameString;
 			biomeNameString = "";
 			subTitle = "";		
