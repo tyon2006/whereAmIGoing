@@ -42,7 +42,6 @@ import net.minecraft.world.BossInfo;
 
 public class WaigEventHandler {
 
-
 	public String subTitle = "";
 	public String lastBiome = "";
 	public String lastLastBiome = "";
@@ -96,7 +95,7 @@ public class WaigEventHandler {
 				subTitle = "";
 				
 				if (excludedBiomesArrayList.contains(biomeNameString)) {
-					System.out.println("Skipping biome: " + biomeNameString);
+					if (ConfigManager.enableDebug == true) System.out.println("Skipping biome: " + biomeNameString);
 					nextTrigger = ticksExisted + ConfigManager.displayWait;
 					return;
 				} 
@@ -203,7 +202,7 @@ public class WaigEventHandler {
 			}
 
 			//cleanup
-			lastLastBiome = lastBiome;
+			if (lastBiome != "") lastLastBiome = lastBiome;
 			lastBiome = biomeNameString;
 			biomeNameString = "";
 			subTitle = "";		

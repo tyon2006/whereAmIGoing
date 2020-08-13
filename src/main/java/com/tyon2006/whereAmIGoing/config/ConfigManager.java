@@ -24,75 +24,76 @@ public class ConfigManager {
 	
 	public static String[] tier1BiomesArray = {"Birch Forest", "Birch Forest Hills", "Birch Forest Hills M", "Birch Forest M", "Cold Beach", "Cold Taiga", "Cold Taiga Hills", "Cold Taiga M", "Deep Ocean", "Desert", "Desert M", "DesertHills", "Extreme Hills", "Extreme Hills Edge", "Extreme Hills M", "Extreme Hills+", "Extreme Hills+ M", "Flower Forest", "Forest", "ForestHills", "FrozenOcean", "Ice Mountains", "Ice Plains", "Ice Plains Spikes", "Jungle", "Jungle M", "JungleEdge", "JungleEdge M", "JungleHills", "Mega Spruce Taiga", "Mega Taiga", "Mega Taiga Hills", "Mesa", "Mesa (Bryce)", "Mesa Plateau", "Mesa Plateau F", "Mesa Plateau F M", "Mesa Plateau M", "MushroomIsland", "MushroomIslandShore", "Ocean", "Plains", "Redwood Taiga Hills M", "Roofed Forest", "Roofed Forest M", "Savanna", "Savanna M", "Savanna Plateau", "Savanna Plateau M", "Stone Beach", "Sunflower Plains", "Swampland", "Swampland M", "Taiga", "Taiga M", "TaigaHills"};
 	public static String tier1Subtitle = "Minecraft Overworld";
-	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0"};
-	//add health, add damage, add armor, add knockback resist
+	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	//add health, add damage, add armor, add armor toughness, add knockback resist, magic resist, follow range
 			
 	public static String[] tier2BiomesArray = {"Bog", "Fen", "Alps", "AlpsFoothills", "Bamboo Forest", "Bayou", "Boreal Forest", "Brushland", "Chaparral", "Cherry Blossom Grove", "Cold Desert", "Coniferous Forest", "Coral Reef", "Crag", "Dead Forest", "Dead Swamp", "Eucalyptus Forest", "Flower Field", "Flower Island", "Glacier", "Grassland", "Gravel Beach", "Grove", "Highland", "Kelp Forest", "Land of Lakes", "Lavender Fields", "Lush Desert", "Lush Swamp", "Mangrove", "Maple Woods", "Marsh", "Meadow", "Moor", "Mountain", "MountainFoothills", "Mystic Grove", "Oasis", "Ominous Woods", "Orchard", "Origin Beach", "Origin Island", "Outback", "Overgrown Cliffs", "Pasture", "Prairie", "Quagmire", "Rainforest", "RedwoodForest", "RedwoodForestEdge", "Sacred Springs", "Seasonal Forest", "Shield", "Shrubland", "Snowy Coniferous Forest", "Snowy Forest", "SnowyTundra", "Steppe", "Temperate Rainforest", "Tropical Island", "Tropical Rainforest", "Tundra", "Volcanic Island", "Wasteland", "Wetland", "White Beach", "Woodland", "Xeric Shrubland"};
 	public static String tier2Subtitle = "Biomes O'Plenty Overworld";
-	public static String[] tier2BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier2BiomesDifficultyArray = {"10", "2", "6", "4", "0.1", "0.1", "8"};
 	
 	public static String[] tier3BiomesArray = {""};
 	public static String tier3Subtitle = "";
-	public static String[] tier3BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier3BiomesDifficultyArray = {"20", "5", "12", "8", "0.3", "0.2", "16"};
 	
 	public static String[] tier4BiomesArray = {"The Void", "The End"};
 	public static String tier4Subtitle = "The End";
-	public static String[] tier4BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier4BiomesDifficultyArray = {"30", "9", "18", "12", "0.6", "0.3", "24"};
 	
 	public static String[] tier5BiomesArray = {""};
 	public static String tier5Subtitle = "";
-	public static String[] tier5BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier5BiomesDifficultyArray = {"40", "12", "24", "16", "0.8", "0.4", "32"};
 	
 	public static String[] tier6BiomesArray = {"Hell", "Fungi Forest", "Corrupted Sands","Phantasmagoric Inferno", "Undergarden", "Visceral Heap"};
 	public static String tier6Subtitle = "The Nether";
-	public static String[] tier6BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier6BiomesDifficultyArray = {"50", "15", "30", "20", "0.9", "0.5", "40"};
 	
 	public static String[] tier7BiomesArray = {""};
 	public static String tier7Subtitle = "";
-	public static String[] tier7BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier7BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier8BiomesArray = {""};
 	public static String tier8Subtitle = "";
-	public static String[] tier8BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier8BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier9BiomesArray = {""};
 	public static String tier9Subtitle = "";
-	public static String[] tier9BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier9BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier10BiomesArray = {""};
 	public static String tier10Subtitle = "";
-	public static String[] tier10BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier10BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier11BiomesArray = {""};
 	public static String tier11Subtitle = "";
-	public static String[] tier11BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier11BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier12BiomesArray = {""};
 	public static String tier12Subtitle = "";
-	public static String[] tier12BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier12BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier13BiomesArray = {""};
 	public static String tier13Subtitle = "";
-	public static String[] tier13BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier13BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier14BiomesArray = {""};
 	public static String tier14Subtitle = "";
-	public static String[] tier14BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier14BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier15BiomesArray = {""};
 	public static String tier15Subtitle = "";	
-	public static String[] tier15BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier15BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier16BiomesArray = {""};
 	public static String tier16Subtitle = "";	
-	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0"};
+	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] excludedBiomesArray = {"River", "Beach", "Frozen River"};
+	public static float[] magicResistArray = new float[16];
 	
 	public static File configFileTemp;
 
 	public static float rareSpawnXPboost;
-	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|50|addhealth|20|drops|minecraft:grass"};
+	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|20|addhealth|20|drops|minecraft:grass|potion|regeneration", "enderman|Slim|20|addhealth|20|drops|minecraft:ender_pearl|potion|strength"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
@@ -121,7 +122,7 @@ public class ConfigManager {
 		displayWait = config.getInt("Time between Updates", "Title Display Timings", displayWait, 20, 1200, "Amount of time to wait until displaying the title again. Lower numbers will display updates faster/more often with higher numbers displaying less often. Whole number value measured in ticks (20 per second)");
 		
 		rareSpawnArrayRaw = config.getStringList("Rarespawn Entries", "Rarespawn", rareSpawnArrayRaw, "Enter 1 line per mob starting with the name of the mob, then name, then the percent chance of spawning, followed by attritbute name and value pairs.");
-		rareSpawnXPboost = config.getFloat("Rarespawn XP Booster", "Rarespawn", rareSpawnXPboost, 1f, 1000.0f, "When a Rarespawn is killed, it will drop its default XP value times the number provided here. Accepts float values.");
+		rareSpawnXPboost = config.getFloat("Rarespawn XP Booster", "Rarespawn", rareSpawnXPboost, 1f, 1000.0f, "When a Rarespawn is killed, it will drop its default XP value times the number provided here. For example, entering 2 gives you double (times 2) the amount of XP Accepts float values.");
 		
 		tier1Subtitle = config.getString("Category 1 Title", "Biome Category Names", tier1Subtitle, "Words that display at the subtitle of Category 1 biomes.");
 		tier2Subtitle = config.getString("Category 2 Title", "Biome Category Names", tier2Subtitle, "Words that display at the subtitle of Category 2 biomes.");
@@ -157,32 +158,48 @@ public class ConfigManager {
 		tier15BiomesArray = config.getStringList("Category 15 Biomes (black)", "Biome Sets", tier15BiomesArray, "Contains an array of biome name strings to display in this category.");
 		tier16BiomesArray = config.getStringList("Category 16 Biomes (blue)", "Biome Sets", tier16BiomesArray, "Contains an array of biome name strings to display in this category.");
 		
-		tier1BiomesDifficultyArray = config.getStringList("Category 1 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier1BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier2BiomesDifficultyArray = config.getStringList("Category 2 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier2BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier3BiomesDifficultyArray = config.getStringList("Category 3 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier3BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier4BiomesDifficultyArray = config.getStringList("Category 4 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier4BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier5BiomesDifficultyArray = config.getStringList("Category 5 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier5BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier6BiomesDifficultyArray = config.getStringList("Category 6 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier6BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier7BiomesDifficultyArray = config.getStringList("Category 7 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier7BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier8BiomesDifficultyArray = config.getStringList("Category 8 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier8BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier9BiomesDifficultyArray = config.getStringList("Category 9 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier9BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier10BiomesDifficultyArray = config.getStringList("Category 10 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier10BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier11BiomesDifficultyArray = config.getStringList("Category 11 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier11BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier12BiomesDifficultyArray = config.getStringList("Category 12 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier12BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier13BiomesDifficultyArray = config.getStringList("Category 13 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier13BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier14BiomesDifficultyArray = config.getStringList("Category 14 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier14BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier15BiomesDifficultyArray = config.getStringList("Category 15 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier15BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
-		tier16BiomesDifficultyArray = config.getStringList("Category 16 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier16BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add knockback resist] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier1BiomesDifficultyArray = config.getStringList("Category 1 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier1BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier2BiomesDifficultyArray = config.getStringList("Category 2 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier2BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier3BiomesDifficultyArray = config.getStringList("Category 3 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier3BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier4BiomesDifficultyArray = config.getStringList("Category 4 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier4BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier5BiomesDifficultyArray = config.getStringList("Category 5 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier5BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier6BiomesDifficultyArray = config.getStringList("Category 6 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier6BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier7BiomesDifficultyArray = config.getStringList("Category 7 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier7BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier8BiomesDifficultyArray = config.getStringList("Category 8 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier8BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier9BiomesDifficultyArray = config.getStringList("Category 9 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier9BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier10BiomesDifficultyArray = config.getStringList("Category 10 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier10BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier11BiomesDifficultyArray = config.getStringList("Category 11 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier11BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier12BiomesDifficultyArray = config.getStringList("Category 12 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier12BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier13BiomesDifficultyArray = config.getStringList("Category 13 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier13BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier14BiomesDifficultyArray = config.getStringList("Category 14 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier14BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier15BiomesDifficultyArray = config.getStringList("Category 15 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier15BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
+		tier16BiomesDifficultyArray = config.getStringList("Category 16 Biome Mob Difficulty Modifiers", "Biome Mob Difficulty", tier16BiomesDifficultyArray, "Contains an array of floats structured as [add health, add damage, add armor, add armor toughness, add knockback resist, add magic resist, add follow range] (must be in that order). Use 0 for skipping the entry, do not leave blank. Value read as a float, so decimals are cool.");
 				
 		excludedBiomesArray = config.getStringList("Ignored Biomes", "Biome Sets", excludedBiomesArray, "Contains an array of biome name strings that will be ignored by this mod's features." );
 				
-		if (config.hasChanged())
-		{
-			config.save();
-		}
-		if (enableRarespawn) {
-			parseRarespawnStringToMap();
-		}
+		if (config.hasChanged()) config.save();
+		if (enableRarespawn) parseRarespawnStringToMap();
+		if (enableBiomeDifficulty) parseMagicResistValues();
+	}
+	
+	public static void parseMagicResistValues() {
+		
+		magicResistArray[0] = Float.parseFloat(tier1BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier2BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier3BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier4BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier5BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier6BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier7BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier8BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier9BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier10BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier11BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier12BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier13BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier14BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier15BiomesDifficultyArray[5]);
+		magicResistArray[0] = Float.parseFloat(tier16BiomesDifficultyArray[5]);
 	}
 	
 	@SubscribeEvent
@@ -268,10 +285,8 @@ public class ConfigManager {
 				}
 				mapSet.put(mapKey, mapValue);
 			}
-	
 			//rareSpawnMap.put(mobKey,mapSet);
 			rareSpawnMap.put(mobKey, new HashMap<String, String>() {{putAll(mapSet);}});
-						
 			rawArrayCursor++;
 			mapSet.clear();
 			//decrement count

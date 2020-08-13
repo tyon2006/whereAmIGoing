@@ -1,62 +1,36 @@
 package com.tyon2006.whereAmIGoing.events;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.JsonToNBT;
+import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.WeightedSpawnerEntity;
 import java.util.Random;
 import net.minecraft.init.MobEffects;
-import net.minecraft.world.BossInfo;
-
-
 
 public class WaigRareSpawnHandler {
 
 	public static Map<String, String> mobAttMap = new HashMap<String, String>();
-	
-	/*
-	@SubscribeEvent
-	public void postPlayerRender( final net.minecraftforge.client.event.RenderLivingEvent<EntityLivingBase> e )
-	{
-		//e.getRenderer().prepareScale(entitylivingbaseIn, partialTicks);
-	}
-	*/
 		
-	@SubscribeEvent (priority = EventPriority.HIGH)
+	@SubscribeEvent (priority = EventPriority.HIGHEST)
 	//@SideOnly (Side.SERVER) //this breaks it
 	//public void onMobJoinDoRarespawn(EntityJoinWorldEvent event) {	//is this even different from living spawn event?
 	public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
@@ -67,66 +41,172 @@ public class WaigRareSpawnHandler {
         if (!(ConfigManager.rareSpawnMap.containsKey(event.getEntity().getName().toLowerCase()))) return;
         
 		if (event.getEntity().getEntityData().hasKey("waigRareSpawnChecked")){
-			System.out.println("this muthafucka already bonused");
+			if(ConfigManager.enableDebug == true) System.out.println("skipping already bonused");
 			return;
 		} 
         
 		Entity entity = event.getEntity();
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = entity.getEntityData();
-		NBTTagCompound healthtag = new NBTTagCompound();
-		NBTTagCompound tag = new NBTTagCompound();
+		//NBTTagCompound mobTag = new NBTTagCompound();
+		//mobTag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later //this is redundant?
 		
-		healthtag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later
-		
-		System.out.println("MAP OUTPUTFOR " + entity.getName().toLowerCase());
-		System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
-		//BossInfoServer bossInfo = new BossInfoServer(entity.getDisplayName(), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_10);
 		mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
-		System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
-		System.out.println(ConfigManager.rareSpawnMap.toString()); 
-		System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
-		System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnchance"));
-		//System.out.println(mobAttMap.toString()); 
-		//System.out.println(mobAttMap.get("spawnchance")); 
+		if (ConfigManager.enableDebug == true) {
+			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
+			System.out.println("MAP OUTPUTFOR " + entity.getName().toLowerCase());
+			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
+			System.out.println(ConfigManager.rareSpawnMap.toString()); 
+			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
+			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnchance"));
+			System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
+		}
 		
-		System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
-		IAttributeInstance entityHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		Random rand = new Random();
-		int randy = rand.nextInt(100);
-		double maxHealth = 0;
-		entityLiving.writeToNBT(healthtag);	//i think this is bad //no, it isnt
-		/*
-		maxHealth = entityHealth.getBaseValue() + 10;
+		int randy = new Random().nextInt(100);
 		
-		//entityLiving.writeToNBT(healthtag);	//i think this is bad
-		//entityLiving.setHealth((float) maxHealth); //remove this see what happens
-		
-		entityHealth.setBaseValue(maxHealth); //is this what actually increases the health?
-		entityLiving.setCustomNameTag("HEALTH:" + String.valueOf(maxHealth)+ " ID:" + event.getEntity().getEntityId() );
-		*/
-		
-		if (randy > 5) {
-            EntityLivingBase mob = entityLiving;
-			System.out.println("WINNER WINNER " + entity.getClass() + " " + entity.getEntityId() + " DINNER. RAND - " + randy);
-			maxHealth = entityHealth.getBaseValue() + 10;
-			entityHealth.setBaseValue(maxHealth);//is this what actually increases the health?
-			entityLiving.setHealth((float)maxHealth);
-			
-			//healthtag.setBoolean("waigIsRare", true);
-			//entityNBT.setTag("waigIsRare", healthtag);
+		if (randy > Integer.parseInt(mobAttMap.get("spawnchance"))) {
+            
+			EntityLivingBase mob = entityLiving;
+            if(ConfigManager.enableDebug == true) System.out.println("WINNER WINNER " + entity.getEntityId() + " DINNER. RANDO - " + randy);
+
 			entityNBT.setBoolean("waigIsRare", true); //this is the good one. thanks kindlich!
-			entityNBT.setString("waigMobName", entity.getName().toLowerCase());
+			entityNBT.setString("waigMobName", entity.getName().toLowerCase()); //add name back to the mob so it can be found for item drops
 			
 			entityLiving.setCustomNameTag(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnname"));// + "HEALTH:" + " ID:" + event.getEntity().getEntityId() );
 			entity.setAlwaysRenderNameTag(true);
             mob.setGlowing(true);
             
-            mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 1000));
+            //armor
+            if(mobAttMap.containsKey("armor") 
+            		&& mobAttMap.get("armor") != null) 
+            {
+            	IAttributeInstance entityArmor = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+            	double maxArmor = entityArmor.getAttributeValue() + Double.parseDouble(mobAttMap.get("armor"));
+            	if(maxArmor > 30) maxArmor = 30;
+            	if(maxArmor < 0) maxArmor = 0;
+            	entityArmor.setBaseValue(maxArmor);       	
+            }
             
-            String potname = "INVISIBILITY";
-            //addPotionEffect(new EffectInstance(Effects.INVISIBILITY, 200));
-            randy = 0;;
+            //armor_toughness
+            if(mobAttMap.containsKey("armor_toughness") 
+            		&& mobAttMap.get("armor_toughness") != null) 
+            {
+            	IAttributeInstance entityarmor_toughness = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS);
+            	double maxarmor_toughness = entityarmor_toughness.getAttributeValue() + Double.parseDouble(mobAttMap.get("armor_toughness"));
+            	if(maxarmor_toughness > 20) maxarmor_toughness = 20;
+            	if(maxarmor_toughness < 0) maxarmor_toughness = 0;
+            	entityarmor_toughness.setBaseValue(maxarmor_toughness);       	
+            }
+            
+            //attack_damage
+            if(mobAttMap.containsKey("attack_damage") 
+            		&& mobAttMap.get("attack_damage") != null) 
+            {
+            	IAttributeInstance entityattack_damage = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+            	double maxattack_damage = entityattack_damage.getAttributeValue() + Double.parseDouble(mobAttMap.get("attack_damage"));
+            	if(maxattack_damage > 200) maxattack_damage = 200;
+            	if(maxattack_damage < 0) maxattack_damage = 0;
+            	entityattack_damage.setBaseValue(maxattack_damage);       	
+            }
+            
+            //attack_speed
+            if(mobAttMap.containsKey("attack_speed") 
+            		&& mobAttMap.get("attack_speed") != null) 
+            {
+            	IAttributeInstance entityattack_speed = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED);
+            	double maxattack_speed = entityattack_speed.getAttributeValue() + Double.parseDouble(mobAttMap.get("attack_speed"));
+            	if(maxattack_speed > 200) maxattack_speed = 200;
+            	if(maxattack_speed < 0) maxattack_speed = 0;
+            	entityattack_speed.setBaseValue(maxattack_speed);       	
+            }
+            
+            //follow_range
+            if(mobAttMap.containsKey("follow_range") 
+            		&& mobAttMap.get("follow_range") != null) 
+            {
+            	IAttributeInstance entityfollow_range = entityLiving.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+            	double maxfollow_range = entityfollow_range.getAttributeValue() + Double.parseDouble(mobAttMap.get("follow_range"));
+            	if(maxfollow_range > 1024) maxfollow_range = 1024;
+            	if(maxfollow_range < 0) maxfollow_range = 0;
+            	entityfollow_range.setBaseValue(maxfollow_range);       	
+            }
+            
+            //knockback_resistance
+            if(mobAttMap.containsKey("knockback_resistance") 
+            		&& mobAttMap.get("knockback_resistance") != null) 
+            {
+            	IAttributeInstance entityknockback_resistance = entityLiving.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
+            	double maxknockback_resistance = entityknockback_resistance.getAttributeValue() + Double.parseDouble(mobAttMap.get("knockback_resistance"));
+            	if(maxknockback_resistance > 1) maxknockback_resistance = 1;
+            	if(maxknockback_resistance < 0) maxknockback_resistance = 0;
+            	entityknockback_resistance.setBaseValue(maxknockback_resistance);       	
+            }
+            
+            //max_health
+            if(mobAttMap.containsKey("max_health") 
+            		&& mobAttMap.get("max_health") != null) 
+            {
+            	IAttributeInstance entitymax_health = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+            	double maxmax_health = entitymax_health.getAttributeValue() + Double.parseDouble(mobAttMap.get("max_health"));
+            	if(maxmax_health > 1024) maxmax_health = 1024;
+            	if(maxmax_health < 0) maxmax_health = 0;
+            	entitymax_health.setBaseValue(maxmax_health);       	
+            }
+           
+            //movement_speed
+            if(mobAttMap.containsKey("movement_speed") 
+            		&& mobAttMap.get("movement_speed") != null) 
+            {
+            	IAttributeInstance entitymovement_speed = entityLiving.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+            	double maxmovement_speed = entitymovement_speed.getAttributeValue() + Double.parseDouble(mobAttMap.get("movement_speed"));
+            	if(maxmovement_speed > 10) maxmovement_speed = 10;
+            	if(maxmovement_speed < 0) maxmovement_speed = 0;
+            	entitymovement_speed.setBaseValue(maxmovement_speed);       	
+            }
+            
+            //potions
+            if(mobAttMap.containsKey("potion")
+            		&& mobAttMap.get("potion") != null) {       
+            	
+                //absorption
+            	if(mobAttMap.get("potion") == "absorption") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 10000, 2));
+            	}
+
+                //fire_resistance
+            	if(mobAttMap.get("potion") == "fire_resistance") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 10000, 2));
+            	}
+                //haste
+            	if(mobAttMap.get("potion") == "haste") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10000, 2));
+            	}
+                //invisibility
+            	if(mobAttMap.get("potion") == "invisibility") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 10000, 2, true, false));
+            	}
+                //regeneration
+            	if(mobAttMap.get("regneration") == "regeneration") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 10000, 2));
+            	}
+                //resistance
+            	if(mobAttMap.get("potion") == "resistance") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 10000, 2));
+            	}
+                //speed
+            	if(mobAttMap.get("potion") == "speed") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.SPEED, 10000, 2));
+            	}
+                //strength
+            	if(mobAttMap.get("potion") == "strength") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 10000, 2));
+            	}
+                //water breathing
+            	if(mobAttMap.get("potion") == "water_breathing") {
+            		mob.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 10000, 2));
+            	}
+            }
+            randy = 0;
             mobAttMap.clear();
 			}
 		}
@@ -136,16 +216,14 @@ public class WaigRareSpawnHandler {
 		
 		if(!(e.getEntityLiving() instanceof EntityLiving))return;
 		NBTTagCompound entityNBT = e.getEntity().getEntityData();
-		//System.out.println(entityNBT.toString());
 		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
 			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
-		}
-			
+		}	
 		if(entityNBT.getBoolean("waigIsRare"));
 		{
 			System.out.println("XP DROP TIME");
-			e.setDroppedExperience(e.getDroppedExperience()*5);
+			e.setDroppedExperience(Math.round(e.getDroppedExperience()*ConfigManager.rareSpawnXPboost));
 			return;
 		} 
 	}
@@ -153,12 +231,12 @@ public class WaigRareSpawnHandler {
 	@SubscribeEvent
 	public void rareDropItem(LivingDropsEvent e) {
 		if(!(e.getEntityLiving() instanceof EntityLiving))return;
-		NBTTagCompound entityNBT = e.getEntity().getEntityData();
-		//System.out.println(entityNBT.toString());
+
 		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
 			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
 		}
+		NBTTagCompound entityNBT = e.getEntity().getEntityData();
 		System.out.println(e.getEntity().getName().toLowerCase());
 		System.out.println(e.getEntityLiving().getEntityData().getString("waigMobName"));
 		mobAttMap.putAll(ConfigManager.rareSpawnMap.get(e.getEntityLiving().getEntityData().getString("waigMobName")));
@@ -169,29 +247,43 @@ public class WaigRareSpawnHandler {
 		{	
 			String dropsString = mobAttMap.get("drops");
 			
+			//don't forget to use single quotes for unicode because strings dont work for some reason.
 			System.out.println(dropsString);
 			String dropModIDString = dropsString.substring(0, dropsString.indexOf(':'));
-			String dropItemIDString = dropsString.substring(0, dropsString.indexOf(".")-1);
-			String dropNBTString = dropsString.substring(dropsString.indexOf("{"), dropsString.indexOf("}")-1);
-
-			if (ConfigManager.enableDebug == true) {
-				System.out.println("ITEM DROP TIME");
-				System.out.println(dropModIDString);
-				System.out.println(dropItemIDString);
+			String dropItemIDString = dropsString.substring(dropsString.indexOf(':'), dropsString.length());
+			String dropNBTString = null;
+			if(dropsString.contains(".")) {
+				dropNBTString = dropsString.substring(dropsString.indexOf('{'), dropsString.indexOf('}')+1);
 				System.out.println(dropNBTString);
 			}
+
+			if (ConfigManager.enableDebug == true) {
+				System.out.println("dropping item:");
+				System.out.println(dropModIDString);
+				System.out.println(dropItemIDString);
+				//System.out.println(dropNBTString);
+			}
 			
-			List<EntityItem> rareDropList = e.getDrops();
-			rareDropList.clear();
-			new Item();
+			//List<EntityItem> rareDropList = e.getDrops();
+			//rareDropList.clear();
+			//new Item();
 			Item dropItem = Item.getByNameOrId(mobAttMap.get("drops"));
 			NBTTagCompound dropNBT = null;
+			if (!(dropNBTString == null)) {
+				try {
+					dropNBT = JsonToNBT.getTagFromJson(dropNBTString);
+				} catch (NBTException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
 			ItemStack rareDrop = new ItemStack(dropItem, 1, 0, dropNBT);
 			EntityItem entityItemDrop = new EntityItem(e.getEntity().world, e.getEntity().posX, e.getEntity().posY, e.getEntity().posZ, rareDrop);
-			//rareDropList.add(mobAttMap.get("drops").to);
+
 			e.getDrops().add(entityItemDrop);
+			mobAttMap.clear();
 			return;
 		} 
 	}
-
 }
