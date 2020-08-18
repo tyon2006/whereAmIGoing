@@ -1,49 +1,50 @@
 package com.tyon2006.whereAmIGoing.events;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Set;
 
-import com.tyon2006.whereAmIGoing.config.ConfigManager;
+import org.apache.commons.lang3.text.WordUtils;
 
+import com.tyon2006.whereAmIGoing.config.ConfigManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIBreakDoor;
+import net.minecraft.entity.ai.EntityAILeapAtTarget;
+import net.minecraft.entity.ai.EntityAIMoveIndoors;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraft.entity.ai.*;
 
 public class WaigBiomeMobAttributeHandler {
 	
+	/*
 	@SubscribeEvent 
 	public void onEnhanceMobDamaged(LivingHurtEvent e) {
 		//remove mobs and players
 		if(e.getEntity() instanceof EntityPlayerMP) return;
 		System.out.println(e.getEntityLiving().getHealth());
 	}
+	*/
 	
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	@SideOnly(Side.CLIENT)
+	@SubscribeEvent(priority = EventPriority.NORMAL)
+	//@SideOnly(Side.CLIENT)
 	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
 
-		if (!(event.getEntity() instanceof EntityLiving)) return;
+		if ((event.getEntity().dimension) != 0) return;
+		if (event.getEntity() instanceof EntityPlayerMP) return;
+		if ( !(event.getEntity() instanceof EntityLiving) ) return;
 		if (event.getEntity().getEntityData().hasKey("waigBiomeAttributeChecked")){
 			if (ConfigManager.enableDebug) System.out.println("found " 
 			+ event.getEntity().getName() 
@@ -54,16 +55,26 @@ public class WaigBiomeMobAttributeHandler {
 		
 		Entity entity = event.getEntity();
 		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
-		String biomeName = mobInBiome.getBiomeName();
+		String biomeName = mobInBiome.getRegistryName().toString();
+		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
+		biomeName = biomeName.replace('_', ' ');
+		biomeName = WordUtils.capitalize(biomeName);
+		biomeName = biomeName.replaceAll("Mutated", " ");
+		biomeName = biomeName.replaceAll("Smaller", " ");
+		biomeName = biomeName.replaceAll("With", " ");
+		biomeName = biomeName.replaceAll("Trees", " ");
+		biomeName = biomeName.trim();
+
 		EntityLiving entityLiving = (EntityLiving) entity;
-		NBTTagCompound entityNBT = entity.getEntityData();
+		NBTTagCompound entityNBT = event.getEntity().getEntityData();
+		entityNBT.setString("waigBiome", biomeName); 
 		if (entityLiving.isCreatureType(EnumCreatureType.AMBIENT, false)) {
 			entityNBT.setBoolean("waigBiomeAttributeChecked", true);
 			return;
 		}
 		
 		Set<Type> biomeTypesSet = BiomeDictionary.getTypes(entity.getEntityWorld().getBiome(entity.getPosition()));
-		System.out.println(biomeTypesSet.toString());
+
 		if(ConfigManager.enableDebug) {
 			System.out.println(biomeTypesSet.toString());
 		}
@@ -94,12 +105,23 @@ public class WaigBiomeMobAttributeHandler {
 		try { mobSpeed = entityLiving.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();}
 		catch(Exception e) {}
 		
+		EntityAITasks tasks = ((EntityLiving)entity).tasks;
+		
 		if(ConfigManager.enableDebug) {
 		}
 
+		
 		if(!(entityNBT.hasKey("waigIsRare")))
 		{
 			entity.setCustomNameTag(biomeName + " " + entity.getName());
+		}
+		
+		if (biomeTypesSet.contains(Type.FOREST)) {
+			try {tasks.addTask(1, new net.minecraft.entity.ai.EntityAIFleeSun((EntityCreature) entity, 1.0D));}
+			catch(Exception e){};
+			((EntityLiving)entity).addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 10000, 1, true, false));
+			mobArmor = mobArmor + attArmor;
+			mobSpeed = mobSpeed * (1 - (attSpeed / 100));
 		}
 		if (biomeTypesSet.contains(Type.COLD)) {
 			mobArmor = mobArmor + attArmor;
@@ -110,6 +132,8 @@ public class WaigBiomeMobAttributeHandler {
 			mobAttackSpeed = mobAttackSpeed * (1 - (attAttackSpeed / 100));
 		}
 		if (biomeTypesSet.contains(Type.JUNGLE)) {
+			try { tasks.addTask(1, new EntityAILeapAtTarget((EntityLiving) entity, 8));}
+			catch(Exception e){}
 			mobAttackSpeed = mobAttackSpeed * (1 + (attAttackSpeed / 100));
 			mobDamage = mobDamage - attDamage;
 		}
@@ -119,6 +143,12 @@ public class WaigBiomeMobAttributeHandler {
 		}
 		if (biomeTypesSet.contains(Type.SPOOKY)) {
 			mobFollowRange = mobFollowRange + attFollowRange;
+			try { tasks.addTask(1, new EntityAIOpenDoor((EntityCreature) entity, false));}
+			catch(Exception e) {}
+			try { tasks.addTask(2, new EntityAIMoveIndoors((EntityCreature) entity));}
+			catch(Exception e) {}
+			try { tasks.addTask(3, new EntityAIBreakDoor((EntityLiving) entity));}
+			catch(Exception e) {}
 		}
 		if (biomeTypesSet.contains(Type.SWAMP)) {
 			mobHealth = mobHealth * (1 + (attHealth / 100));
@@ -153,8 +183,6 @@ public class WaigBiomeMobAttributeHandler {
 		//plains = speed 2% Health -5%
 		
 		//grab all the values
-
-		//apply all the values
 		IAttributeInstance mobAttributeArmor = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR);
 		mobAttributeArmor.setBaseValue(mobArmor);
 		IAttributeInstance mobAttributeArmorToughness = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS);
@@ -178,7 +206,6 @@ public class WaigBiomeMobAttributeHandler {
 		mobAttributeFollow.setBaseValue(mobFollowRange);
 		}
 		catch(Exception e) {}
-		
 		IAttributeInstance mobAttributeKnockback = entityLiving.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
 		mobAttributeKnockback.setBaseValue(mobKnockbackResist);
 		try {
@@ -189,9 +216,9 @@ public class WaigBiomeMobAttributeHandler {
 		
 		if (ConfigManager.enableDebug) {
 			entityLiving.setCustomNameTag(entityLiving.getName() + " " + mobHealth + " " + mobDamage + " " + mobArmor + " " + mobArmorToughness + " " + mobKnockbackResist + " " + mobFollowRange);
-			entity.setAlwaysRenderNameTag(true);
 		}
 		
+		entityNBT.setInteger("waigBiomeID", Biome.getIdForBiome(mobInBiome));
 		entityNBT.setBoolean("waigBiomeAttributeChecked", true);
 
 	}	

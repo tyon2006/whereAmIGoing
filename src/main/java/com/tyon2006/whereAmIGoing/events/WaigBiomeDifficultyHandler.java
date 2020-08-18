@@ -3,30 +3,26 @@ package com.tyon2006.whereAmIGoing.events;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 
 public class WaigBiomeDifficultyHandler {
 	
@@ -49,9 +45,8 @@ public class WaigBiomeDifficultyHandler {
 	
 	@SubscribeEvent 
 	public void onEnhanceMobDamaged(LivingHurtEvent e) {
-		//remove mobs and players
+
 		if(e.getEntity() instanceof EntityPlayerMP) return;
-		
 		if (e.getSource() == DamageSource.MAGIC) {
 			
 			Entity entity = e.getEntity();
@@ -138,23 +133,21 @@ public class WaigBiomeDifficultyHandler {
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[15]))));
 				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
-
 		}
-		
 	}
 	
-	@SubscribeEvent(priority = EventPriority.NORMAL)
-	@SideOnly(Side.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGH)
+	//@SideOnly(Side.CLIENT)
 	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
 
+		if (event.getEntity() instanceof EntityPlayerMP) return;
 		if (event.getEntity() instanceof EntityLiving) {	
 			
 			Entity entity = event.getEntity();
 			Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
-			String biomeName = mobInBiome.getBiomeName();
+			String biomeName = mobInBiome.getRegistryName().toString();
 			EntityLiving entityLiving = (EntityLiving) entity;
-			NBTTagCompound entityNBT = entity.getEntityData();
-
+			NBTTagCompound entityNBT = event.getEntity().getEntityData();
 
 			
 			if (entityLiving.isCreatureType(EnumCreatureType.AMBIENT, false)) {
@@ -174,7 +167,7 @@ public class WaigBiomeDifficultyHandler {
 			double maxArmorToughness = 0;
 			double maxKnockbackResist = 0;
 			double maxFollowRange = 0;
-			String[] difficultyValues = {"0", "0", "0", "0", "0", "0"};  
+			String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};  
 
 			if (tier1BiomesArrayList.contains(biomeName)) {
 				difficultyValues = ConfigManager.tier1BiomesDifficultyArray;
@@ -193,7 +186,8 @@ public class WaigBiomeDifficultyHandler {
 			}
 			else if (tier6BiomesArrayList.contains(biomeName)) {
 				difficultyValues = ConfigManager.tier6BiomesDifficultyArray;
-			}
+				System.out.println("shazam");
+				}
 			else if (tier7BiomesArrayList.contains(biomeName)) {
 				difficultyValues = ConfigManager.tier7BiomesDifficultyArray;
 			}
@@ -224,7 +218,6 @@ public class WaigBiomeDifficultyHandler {
 			else if (tier16BiomesArrayList.contains(biomeName)) {
 				difficultyValues = ConfigManager.tier16BiomesDifficultyArray;
 			}
-			else return;
 			
 			if(ConfigManager.enableDebug) {
 				System.out.println(difficultyValues[0]);
@@ -236,7 +229,6 @@ public class WaigBiomeDifficultyHandler {
 				System.out.println(difficultyValues[6]);
 			}
 			
-
 			maxHealth = Double.parseDouble(difficultyValues[0]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
 			try {maxDamage = Double.parseDouble(difficultyValues[1]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();}
 			catch(Exception e) {}
@@ -245,9 +237,7 @@ public class WaigBiomeDifficultyHandler {
 			maxKnockbackResist = Double.parseDouble(difficultyValues[4]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
 			try {maxFollowRange= Double.parseDouble(difficultyValues[6]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).getAttributeValue();}
 			catch(Exception e) {}
-			
 			//apply all the values
-			
 			IAttributeInstance mobAttributeHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
 			mobAttributeHealth.setBaseValue(maxHealth);
 			entityLiving.setHealth((float) maxHealth);
@@ -270,14 +260,102 @@ public class WaigBiomeDifficultyHandler {
 			catch(Exception e) {}
 			
 			if (ConfigManager.enableDebug) {
-				entityLiving.setCustomNameTag(entityLiving.getName() + " " + maxHealth + " " + maxDamage + " " + maxArmor + " " + maxArmorToughness + " " + maxKnockbackResist + " " + maxFollowRange);
-				//entity.setAlwaysRenderNameTag(true);
-			}
-			
-			if (ConfigManager.enableDebug) {
 				
 			}
 			entityNBT.setBoolean("waigBiomeLevelChecked", true);
 		}
-	}	
+	}
+	
+	@SubscribeEvent
+    public void rareDropXP(LivingExperienceDropEvent e){
+		
+		System.out.print("xp drop event");
+		
+		if(!(e.getEntityLiving() instanceof EntityLiving)) return;
+		if (e.getEntity() instanceof EntityPlayerMP) return;
+		
+		Entity entity = e.getEntity();
+		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
+		String biomeName = (mobInBiome.getRegistryName().toString());
+		System.out.println("HERE SHE COMES");
+				System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
+		
+		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
+		biomeName = biomeName.replace('_', ' ');
+		biomeName = WordUtils.capitalize(biomeName);
+		biomeName = biomeName.replaceAll("Mutated", " ");
+		biomeName = biomeName.replaceAll("Smaller", " ");
+		biomeName = biomeName.replaceAll("With", " ");
+		biomeName = biomeName.replaceAll("Trees", " ");
+		biomeName = biomeName.trim();
+		
+		System.out.println("BIOME: " + biomeName);
+		EntityLiving entityLiving = (EntityLiving) entity;
+		//NBTTagCompound entityNBT = e.getEntity().getEntityData();	
+		
+		String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};
+		
+		if (tier1BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier1BiomesDifficultyArray;
+		}
+		else if (tier2BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier2BiomesDifficultyArray;
+		}
+		else if (tier3BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier3BiomesDifficultyArray;
+		}
+		else if (tier4BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier4BiomesDifficultyArray;
+		}
+		else if (tier5BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier5BiomesDifficultyArray;
+		}
+		else if (tier6BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier6BiomesDifficultyArray;
+		}
+		else if (tier7BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier7BiomesDifficultyArray;
+		}
+		else if (tier8BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier8BiomesDifficultyArray;
+		}
+		else if (tier9BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier9BiomesDifficultyArray;
+		}
+		else if (tier10BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier10BiomesDifficultyArray;
+		}
+		else if (tier11BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier11BiomesDifficultyArray;
+		}
+		else if (tier12BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier12BiomesDifficultyArray;
+		}
+		else if (tier13BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier13BiomesDifficultyArray;
+		}
+		else if (tier14BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier14BiomesDifficultyArray;
+		}
+		else if (tier15BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier15BiomesDifficultyArray;
+		}
+		else if (tier16BiomesArrayList.contains(biomeName)) {
+			difficultyValues = ConfigManager.tier16BiomesDifficultyArray;
+		}
+		
+		System.out.print(difficultyValues[7]);
+		float xpScale = Float.parseFloat(difficultyValues[7]);
+		
+		System.out.println("scale: " + xpScale);
+		System.out.println("final XP: " + (Math.round(e.getDroppedExperience()*xpScale)));
+		
+        if(ConfigManager.enableDebug) {
+        }
+		
+		{
+			e.setDroppedExperience(Math.round(e.getDroppedExperience()*xpScale));
+			return;
+		} 
+	}
 }

@@ -1,7 +1,6 @@
 package com.tyon2006.whereAmIGoing.events;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
@@ -17,12 +16,14 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+
 import java.util.Random;
 import net.minecraft.init.MobEffects;
 
@@ -31,27 +32,30 @@ public class WaigRareSpawnHandler {
 	public static Map<String, String> mobAttMap = new HashMap<String, String>();
 		
 	@SubscribeEvent (priority = EventPriority.HIGHEST)
-	//@SideOnly (Side.SERVER) //this breaks it
-	//public void onMobJoinDoRarespawn(EntityJoinWorldEvent event) {	//is this even different from living spawn event?
 	public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
 		
         if (event.getWorld().isRemote) return;
 		if (!(event.getEntity() instanceof EntityLiving)) return;
+		if (event.getEntity() instanceof EntityPlayerMP) return;
         if (event.getEntityLiving().isDead) return;
         if (!(ConfigManager.rareSpawnMap.containsKey(event.getEntity().getName().toLowerCase()))) return;
-        
 		if (event.getEntity().getEntityData().hasKey("waigRareSpawnChecked")){
 			if(ConfigManager.enableDebug == true) System.out.println("skipping already bonused");
 			return;
-		} 
+		}
         
 		Entity entity = event.getEntity();
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = entity.getEntityData();
-		//NBTTagCompound mobTag = new NBTTagCompound();
-		//mobTag.setBoolean("waighealth", true); //tag the mob so it doesn't get modified later //this is redundant?
 		
 		mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
+		
+		if(mobAttMap.containsKey("rareSpawnBiome")) {
+			String checkBiomeName = mobAttMap.get("rareSpawnBiome");
+			String biomeName = (entity.getEntityWorld().getBiome(entity.getPosition())).getBiomeName();
+			if (biomeName != checkBiomeName) return;
+		}
+		
 		if (ConfigManager.enableDebug == true) {
 			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
 			System.out.println("MAP OUTPUTFOR " + entity.getName().toLowerCase());
@@ -74,7 +78,7 @@ public class WaigRareSpawnHandler {
 			
 			entityLiving.setCustomNameTag(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnname"));// + "HEALTH:" + " ID:" + event.getEntity().getEntityId() );
 			entity.setAlwaysRenderNameTag(true);
-            mob.setGlowing(true);
+            //mob.setGlowing(true);
             
             //armor
             if(mobAttMap.containsKey("armor") 
@@ -164,46 +168,34 @@ public class WaigRareSpawnHandler {
             	entitymovement_speed.setBaseValue(maxmovement_speed);       	
             }
             
-            //potions
-            if(mobAttMap.containsKey("potion")
-            		&& mobAttMap.get("potion") != null) {       
-            	
-                //absorption
+            if(mobAttMap.containsKey("potion") && mobAttMap.get("potion") != null) {       
+        
             	if(mobAttMap.get("potion") == "absorption") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION, 10000, 2, true, true));
             	}
-
-                //fire_resistance
             	if(mobAttMap.get("potion") == "fire_resistance") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 10000, 2, true, true));
             	}
-                //haste
             	if(mobAttMap.get("potion") == "haste") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10000, 2, true, true));
             	}
-                //invisibility
             	if(mobAttMap.get("potion") == "invisibility") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 10000, 2, true, false));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY, 10000, 2, true, true));
             	}
-                //regeneration
             	if(mobAttMap.get("regneration") == "regeneration") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 10000, 2, true, true));
             	}
-                //resistance
             	if(mobAttMap.get("potion") == "resistance") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 10000, 2, true, true));
             	}
-                //speed
             	if(mobAttMap.get("potion") == "speed") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.SPEED, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.SPEED, 10000, 2, true, true));;
             	}
-                //strength
             	if(mobAttMap.get("potion") == "strength") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 10000, 2, true, true));
             	}
-                //water breathing
             	if(mobAttMap.get("potion") == "water_breathing") {
-            		mob.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 10000, 2));
+            		mob.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING, 10000, 2, true, true));
             	}
             }
             randy = 0;
@@ -216,10 +208,12 @@ public class WaigRareSpawnHandler {
 		
 		if(!(e.getEntityLiving() instanceof EntityLiving))return;
 		NBTTagCompound entityNBT = e.getEntity().getEntityData();
+		
 		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
 			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
 		}	
+		
 		if(entityNBT.getBoolean("waigIsRare"));
 		{
 			System.out.println("XP DROP TIME");
@@ -236,6 +230,7 @@ public class WaigRareSpawnHandler {
 			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
 		}
+		
 		NBTTagCompound entityNBT = e.getEntity().getEntityData();
 		System.out.println(e.getEntity().getName().toLowerCase());
 		System.out.println(e.getEntityLiving().getEntityData().getString("waigMobName"));
@@ -243,15 +238,16 @@ public class WaigRareSpawnHandler {
 		
 		if(entityNBT.getBoolean("waigIsRare") 
 				&& mobAttMap.containsKey("drops")
-				&& mobAttMap.get("drops") != null);
-		{	
+				&& mobAttMap.get("drops") != null);{	
+					
 			String dropsString = mobAttMap.get("drops");
 			
-			//don't forget to use single quotes for unicode because strings dont work for some reason.
+			//don't forget to use single quotes for character unicode because strings dont work for some reason.
 			System.out.println(dropsString);
 			String dropModIDString = dropsString.substring(0, dropsString.indexOf(':'));
 			String dropItemIDString = dropsString.substring(dropsString.indexOf(':'), dropsString.length());
 			String dropNBTString = null;
+			
 			if(dropsString.contains(".")) {
 				dropNBTString = dropsString.substring(dropsString.indexOf('{'), dropsString.indexOf('}')+1);
 				System.out.println(dropNBTString);
@@ -261,26 +257,18 @@ public class WaigRareSpawnHandler {
 				System.out.println("dropping item:");
 				System.out.println(dropModIDString);
 				System.out.println(dropItemIDString);
-				//System.out.println(dropNBTString);
 			}
 			
-			//List<EntityItem> rareDropList = e.getDrops();
-			//rareDropList.clear();
-			//new Item();
 			Item dropItem = Item.getByNameOrId(mobAttMap.get("drops"));
 			NBTTagCompound dropNBT = null;
 			if (!(dropNBTString == null)) {
 				try {
 					dropNBT = JsonToNBT.getTagFromJson(dropNBTString);
-				} catch (NBTException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				} catch (NBTException e1) {}
 			}
-
+			
 			ItemStack rareDrop = new ItemStack(dropItem, 1, 0, dropNBT);
 			EntityItem entityItemDrop = new EntityItem(e.getEntity().world, e.getEntity().posX, e.getEntity().posY, e.getEntity().posZ, rareDrop);
-
 			e.getDrops().add(entityItemDrop);
 			mobAttMap.clear();
 			return;

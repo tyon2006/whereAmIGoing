@@ -12,7 +12,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		if(ConfigManager.enableRarespawn==true) MinecraftForge.EVENT_BUS.register(new WaigRareSpawnHandler());
-		if(ConfigManager.enableRarespawn==true) MinecraftForge.EVENT_BUS.register(new WaigBiomeDifficultyHandler());
-		MinecraftForge.EVENT_BUS.register(new WaigBiomeMobAttributeHandler());
+		//if(ConfigManager.enableRarespawn==true) MinecraftForge.EVENT_BUS.register(new WaigBiomeDifficultyHandler());
+		if(ConfigManager.enableBiomeAttributeTweaks==true) MinecraftForge.EVENT_BUS.register(new WaigBiomeMobAttributeHandler());
 	}	
 }

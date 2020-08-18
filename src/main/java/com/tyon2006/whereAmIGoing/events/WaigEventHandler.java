@@ -69,7 +69,7 @@ public class WaigEventHandler {
 	int nextTrigger = ticksExisted + ConfigManager.displayWait;
 
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
+	//@SideOnly(Side.CLIENT)
 	public void checkBiomeOnClientTick(ClientTickEvent event) {
 
 		if(Minecraft.getMinecraft().player == null) return; //it will crash on title screen without this line.
@@ -86,8 +86,8 @@ public class WaigEventHandler {
 		if ((nextTrigger < ticksExisted) 
 				&& (currentPhase == "END"
 				//&& event.side.isClient() == true) 
-				&& biomeNameString != lastBiome)
-				&& biomeNameString != lastLastBiome){	
+				&& biomeNameString != lastBiome)) {
+				//&& biomeNameString != lastLastBiome){	
 
 			//if checking is disabled
 			if(ConfigManager.disableCategories == true) {
@@ -202,7 +202,7 @@ public class WaigEventHandler {
 			}
 
 			//cleanup
-			if (lastBiome != "") lastLastBiome = lastBiome;
+			//if (lastBiome != "") lastLastBiome = lastBiome;
 			lastBiome = biomeNameString;
 			biomeNameString = "";
 			subTitle = "";		

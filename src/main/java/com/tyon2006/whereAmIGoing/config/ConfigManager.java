@@ -13,87 +13,111 @@ public class ConfigManager {
 	
 	public static boolean disableCategories = false;
 	public static boolean enableBiomeNav = true;
-	public static boolean enableRarespawn = true;
-	public static boolean enableBiomeDifficulty = true;
 	public static boolean enableDebug = false;
-	
+	public static boolean enableRarespawn = true;
+	public static boolean enableRarespawnDebug = true;
+	public static boolean enableBiomeDifficulty = true;
+	public static boolean enableBiomeDifficultyDebug = true;
+	public static boolean enableBiomeAttributeTweaks = true;
+	public static boolean enableBiomeAttributeTweaksDebug = true;
+
 	public static int timeFadeIn = 20;
 	public static int displayTime = 10;
 	public static int timeFadeOut = 20;
-	public static int displayWait = 20;
+	public static int displayWait = 40;
 	
-	public static String[] tier1BiomesArray = {"Birch Forest", "Birch Forest Hills", "Birch Forest Hills M", "Birch Forest M", "Cold Beach", "Cold Taiga", "Cold Taiga Hills", "Cold Taiga M", "Deep Ocean", "Desert", "Desert M", "DesertHills", "Extreme Hills", "Extreme Hills Edge", "Extreme Hills M", "Extreme Hills+", "Extreme Hills+ M", "Flower Forest", "Forest", "ForestHills", "FrozenOcean", "Ice Mountains", "Ice Plains", "Ice Plains Spikes", "Jungle", "Jungle M", "JungleEdge", "JungleEdge M", "JungleHills", "Mega Spruce Taiga", "Mega Taiga", "Mega Taiga Hills", "Mesa", "Mesa (Bryce)", "Mesa Plateau", "Mesa Plateau F", "Mesa Plateau F M", "Mesa Plateau M", "MushroomIsland", "MushroomIslandShore", "Ocean", "Plains", "Redwood Taiga Hills M", "Roofed Forest", "Roofed Forest M", "Savanna", "Savanna M", "Savanna Plateau", "Savanna Plateau M", "Stone Beach", "Sunflower Plains", "Swampland", "Swampland M", "Taiga", "Taiga M", "TaigaHills"};
-	public static String tier1Subtitle = "Minecraft Overworld";
-	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
-	//add health, add damage, add armor, add armor toughness, add knockback resist, magic resist, follow range
-			
-	public static String[] tier2BiomesArray = {"Bog", "Fen", "Alps", "AlpsFoothills", "Bamboo Forest", "Bayou", "Boreal Forest", "Brushland", "Chaparral", "Cherry Blossom Grove", "Cold Desert", "Coniferous Forest", "Coral Reef", "Crag", "Dead Forest", "Dead Swamp", "Eucalyptus Forest", "Flower Field", "Flower Island", "Glacier", "Grassland", "Gravel Beach", "Grove", "Highland", "Kelp Forest", "Land of Lakes", "Lavender Fields", "Lush Desert", "Lush Swamp", "Mangrove", "Maple Woods", "Marsh", "Meadow", "Moor", "Mountain", "MountainFoothills", "Mystic Grove", "Oasis", "Ominous Woods", "Orchard", "Origin Beach", "Origin Island", "Outback", "Overgrown Cliffs", "Pasture", "Prairie", "Quagmire", "Rainforest", "RedwoodForest", "RedwoodForestEdge", "Sacred Springs", "Seasonal Forest", "Shield", "Shrubland", "Snowy Coniferous Forest", "Snowy Forest", "SnowyTundra", "Steppe", "Temperate Rainforest", "Tropical Island", "Tropical Rainforest", "Tundra", "Volcanic Island", "Wasteland", "Wetland", "White Beach", "Woodland", "Xeric Shrubland"};
-	public static String tier2Subtitle = "Biomes O'Plenty Overworld";
-	public static String[] tier2BiomesDifficultyArray = {"10", "2", "6", "4", "0.1", "0.1", "8"};
+	public static String[] tier1BiomesArray = {"Birch Forest", "Boreal Forest", "Brushland", "Dead Forest", "Desert", "Flower Forest", "Forest", 
+			"Grassland", "Gravel Beach", "Grove", "Highland", "Jungle", "Jungle M", "Marsh", "Mega Spruce Taiga", "Mesa (Bryce)", "Mountain", 
+			"Ocean", "Orchard", "Origin Beach", "Origin Island", "Plains", "Savanna", "Stone Beach", "Swampland", "Taiga", "Taiga M", "White Beach"};
+	public static String tier1Subtitle = "Level 1 Biome";
+	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "1"};
+	//add health, add damage, add armor, add armor toughness, add knockback resist, magic resist, follow range, xp bonus
 	
-	public static String[] tier3BiomesArray = {""};
-	public static String tier3Subtitle = "";
-	public static String[] tier3BiomesDifficultyArray = {"20", "5", "12", "8", "0.3", "0.2", "16"};
+	public static String[] tier2BiomesArray = {"Birch Forest Hills", "Birch Forest M", "Cold Desert", "Dried Reef", "Extreme Hills", "Extreme Hills Edge",
+			"Fen", "ForestHills", "FrozenOcean", "JungleEdge", "Lavender Fields", "Meadow", "MushroomIsland", "MushroomIslandShore",
+			"Mystic Grove", "Pasture", "Prairie", "Rainforest", "Sacred Springs", "Savanna M", "Savanna Plateau M", "Shrubland",
+			"Snowy Coniferous Forest", "Swampland M", "TaigaHills", "The Abyss", "Wetland"};
+	public static String tier2Subtitle = "Level 2 Biome";
+	public static String[] tier2BiomesDifficultyArray = {"10", "2", "6", "4", "0.1", "0.1", "8", "1.25"};
 	
-	public static String[] tier4BiomesArray = {"The Void", "The End"};
-	public static String tier4Subtitle = "The End";
-	public static String[] tier4BiomesDifficultyArray = {"30", "9", "18", "12", "0.6", "0.3", "24"};
+	public static String[] tier3BiomesArray = {"Birch Forest Hills M", "Bog", "Cherry Blossom Grove", "Cold Taiga", "Coniferous Forest", "Coral Reef",
+			"Eucalyptus Forest", "Extreme Hills M", "Extreme Hills+", "Flower Field", "Ice Plains", "JungleHills", "Kelp Forest", "Land of Lakes", 
+			"Lush Desert", "Lush Swamp", "Magical Forest", "Maple Woods", "Mega Taiga Hills", "Mesa Plateau F M", "Mesa Plateau M", "MountainFoothills",
+			"Outback", "Seasonal Forest", "Steppe", "Sunflower Plains", "Temperate Rainforest", "Volcanic Island"};
+	public static String tier3Subtitle = "Level 3 Biome";
+	public static String[] tier3BiomesDifficultyArray = {"20", "5", "12", "8", "0.3", "0.2", "16", "1.5"};
 	
-	public static String[] tier5BiomesArray = {""};
-	public static String tier5Subtitle = "";
-	public static String[] tier5BiomesDifficultyArray = {"40", "12", "24", "16", "0.8", "0.4", "32"};
+	public static String[] tier4BiomesArray = {"Alps", "AlpsFoothills", "Arctic Abyss", "Bamboo Forest", "Bayou", "Chaparral", "Cold Taiga Hills",
+			"Cold Taiga M", "Corrupted Sands", "Crag", "Extreme Hills+ M", "Flower Island", "Fungi Forest", "Fungi Forest", "Hell", "JungleEdge M",
+			"Mangrove", "Mega Taiga", "Mesa", "Mesa Plateau", "Moor", "Oasis", "Phantasmagoric Inferno", "RedwoodForestEdge", "Roofed Forest",
+			"Ruthless Sands", "Shield", "Snowy Forest", "Torrid Wasteland", "treasure", "Tropical Rainforest", "Undergarden", "Visceral Heap",
+			"Woodland", "Xeric Shrubland"};
+	public static String tier4Subtitle = "Level 4 Biome";
+	public static String[] tier4BiomesDifficultyArray = {"30", "9", "18", "12", "0.6", "0.3", "24", "1.75"};
 	
-	public static String[] tier6BiomesArray = {"Hell", "Fungi Forest", "Corrupted Sands","Phantasmagoric Inferno", "Undergarden", "Visceral Heap"};
-	public static String tier6Subtitle = "The Nether";
-	public static String[] tier6BiomesDifficultyArray = {"50", "15", "30", "20", "0.9", "0.5", "40"};
+	public static String[] tier5BiomesArray = {"Dead Swamp", "Deep Ocean", "Desert M", "DesertHills", "Eerie", "Glacier", "Ice Mountains", 
+			"Ice Plains Spikes", "Mesa Plateau F", "Ominous Woods", "Overgrown Cliffs", "Quagmire", "Redwood Taiga Hills M", "RedwoodForest", 
+			"Roofed Forest M", "Savanna Plateau", "SnowyTundra", "The End", "The Void", "Tropical Island", "Tundra", "Wasteland"};
+	public static String tier5Subtitle = "Level 5 Biome";
+	public static String[] tier5BiomesDifficultyArray = {"40", "12", "24", "16", "0.8", "0.4", "32", "2.0"};
 	
-	public static String[] tier7BiomesArray = {""};
-	public static String tier7Subtitle = "";
-	public static String[] tier7BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier6BiomesArray = {"Aether Void", "Arctic Peaks", "Black Ridge", "Crystal Spires", "Deceitful Bog", "Elysian Fields",
+			"Elysian Forest", "Forgotten Highlands", "Fungal Forest", "Glowing Fungi Forest", "Highlands", "Hilly Fungi Forest", "Hilly Vigilant Forest",
+			"Instanced Zone", "Irradiated Forests", "Magnetic Hills", "Night Plains", "Obscured Peaks", "Obscured Plateau", "Petrified Forest",
+			"Phantasmal Valley", "Runebush Grove", "Submerged Swamp", "Subterranean Savannah", "Ulterior Outback", "Underground Jungle", 
+			"Vigilant Forest", "Volcanic Desert", "Warped Fields"};
+	public static String tier6Subtitle = "Level 6 Biome";
+	public static String[] tier6BiomesDifficultyArray = {"50", "15", "30", "20", "0.9", "0.5", "40", "2.25"};
+	
+	public static String[] tier7BiomesArray = {"Dwarven Capital", "Dragon shrine", "Human Citadel"};
+	public static String tier7Subtitle = "Sanctuary";
+	public static String[] tier7BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier8BiomesArray = {""};
 	public static String tier8Subtitle = "";
-	public static String[] tier8BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier8BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier9BiomesArray = {""};
 	public static String tier9Subtitle = "";
-	public static String[] tier9BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier9BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier10BiomesArray = {""};
 	public static String tier10Subtitle = "";
-	public static String[] tier10BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier10BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier11BiomesArray = {""};
 	public static String tier11Subtitle = "";
-	public static String[] tier11BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier11BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier12BiomesArray = {""};
 	public static String tier12Subtitle = "";
-	public static String[] tier12BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier12BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier13BiomesArray = {""};
 	public static String tier13Subtitle = "";
-	public static String[] tier13BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier13BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier14BiomesArray = {""};
 	public static String tier14Subtitle = "";
-	public static String[] tier14BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier14BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier15BiomesArray = {""};
 	public static String tier15Subtitle = "";	
-	public static String[] tier15BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier15BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
 	public static String[] tier16BiomesArray = {""};
 	public static String tier16Subtitle = "";	
-	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0"};
+	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
-	public static String[] excludedBiomesArray = {"River", "Beach", "Frozen River"};
+	public static String[] excludedBiomesArray = {"River", "Cold Beach", "Beach", "Frozen River"};
 	public static float[] magicResistArray = new float[16];
 	
 	public static File configFileTemp;
 
-	public static float rareSpawnXPboost;
-	public static String[] rareSpawnArrayRaw = {"zombie|Poque the Dreadful|20|addhealth|20|drops|minecraft:grass|potion|regeneration", "enderman|Slim|20|addhealth|20|drops|minecraft:ender_pearl|potion|strength"};
+	public static float rareSpawnXPboost = 2;
+	public static String[] rareSpawnArrayRaw = {
+			"zombie|Poque the Dreadful|20|addhealth|20|drops|minecraft:grass|potion|regeneration", 
+			"enderman|Slim|20|addhealth|20|drops|minecraft:ender_pearl|potion|strength"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
@@ -181,7 +205,7 @@ public class ConfigManager {
 		if (enableRarespawn) parseRarespawnStringToMap();
 		if (enableBiomeDifficulty) parseMagicResistValues();
 	}
-	
+
 	public static void parseMagicResistValues() {
 		
 		magicResistArray[0] = Float.parseFloat(tier1BiomesDifficultyArray[5]);
