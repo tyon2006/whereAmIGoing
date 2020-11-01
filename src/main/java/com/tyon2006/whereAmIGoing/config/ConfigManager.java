@@ -13,13 +13,15 @@ public class ConfigManager {
 	
 	public static boolean disableCategories = false;
 	public static boolean enableBiomeNav = true;
+	public static boolean enableDebugBiomeHUD = false;
 	public static boolean enableDebug = false;
+	public static boolean enableDebugDifficultyHandler = true;
 	public static boolean enableRarespawn = true;
 	public static boolean enableRarespawnDebug = true;
 	public static boolean enableBiomeDifficulty = true;
-	public static boolean enableBiomeDifficultyDebug = true;
+	public static boolean enableBiomeDifficultyDebug = false;
 	public static boolean enableBiomeAttributeTweaks = true;
-	public static boolean enableBiomeAttributeTweaksDebug = true;
+	public static boolean enableBiomeAttributeTweaksDebug = false;
 
 	public static int timeFadeIn = 20;
 	public static int displayTime = 10;
@@ -38,14 +40,14 @@ public class ConfigManager {
 			"Mystic Grove", "Pasture", "Prairie", "Rainforest", "Sacred Springs", "Savanna M", "Savanna Plateau M", "Shrubland",
 			"Snowy Coniferous Forest", "Swampland M", "TaigaHills", "The Abyss", "Wetland"};
 	public static String tier2Subtitle = "Level 2 Biome";
-	public static String[] tier2BiomesDifficultyArray = {"10", "2", "6", "4", "0.1", "0.1", "8", "1.25"};
+	public static String[] tier2BiomesDifficultyArray = {"10", "2", "3", "2", "0.1", "0.1", "8", "1.25"};
 	
 	public static String[] tier3BiomesArray = {"Birch Forest Hills M", "Bog", "Cherry Blossom Grove", "Cold Taiga", "Coniferous Forest", "Coral Reef",
 			"Eucalyptus Forest", "Extreme Hills M", "Extreme Hills+", "Flower Field", "Ice Plains", "JungleHills", "Kelp Forest", "Land of Lakes", 
 			"Lush Desert", "Lush Swamp", "Magical Forest", "Maple Woods", "Mega Taiga Hills", "Mesa Plateau F M", "Mesa Plateau M", "MountainFoothills",
 			"Outback", "Seasonal Forest", "Steppe", "Sunflower Plains", "Temperate Rainforest", "Volcanic Island"};
 	public static String tier3Subtitle = "Level 3 Biome";
-	public static String[] tier3BiomesDifficultyArray = {"20", "5", "12", "8", "0.3", "0.2", "16", "1.5"};
+	public static String[] tier3BiomesDifficultyArray = {"20", "5", "6", "4", "0.3", "0.2", "16", "1.5"};
 	
 	public static String[] tier4BiomesArray = {"Alps", "AlpsFoothills", "Arctic Abyss", "Bamboo Forest", "Bayou", "Chaparral", "Cold Taiga Hills",
 			"Cold Taiga M", "Corrupted Sands", "Crag", "Extreme Hills+ M", "Flower Island", "Fungi Forest", "Fungi Forest", "Hell", "JungleEdge M",
@@ -53,13 +55,13 @@ public class ConfigManager {
 			"Ruthless Sands", "Shield", "Snowy Forest", "Torrid Wasteland", "treasure", "Tropical Rainforest", "Undergarden", "Visceral Heap",
 			"Woodland", "Xeric Shrubland"};
 	public static String tier4Subtitle = "Level 4 Biome";
-	public static String[] tier4BiomesDifficultyArray = {"30", "9", "18", "12", "0.6", "0.3", "24", "1.75"};
+	public static String[] tier4BiomesDifficultyArray = {"30", "9", "9", "6", "0.6", "0.3", "24", "1.75"};
 	
 	public static String[] tier5BiomesArray = {"Dead Swamp", "Deep Ocean", "Desert M", "DesertHills", "Eerie", "Glacier", "Ice Mountains", 
 			"Ice Plains Spikes", "Mesa Plateau F", "Ominous Woods", "Overgrown Cliffs", "Quagmire", "Redwood Taiga Hills M", "RedwoodForest", 
 			"Roofed Forest M", "Savanna Plateau", "SnowyTundra", "The End", "The Void", "Tropical Island", "Tundra", "Wasteland"};
 	public static String tier5Subtitle = "Level 5 Biome";
-	public static String[] tier5BiomesDifficultyArray = {"40", "12", "24", "16", "0.8", "0.4", "32", "2.0"};
+	public static String[] tier5BiomesDifficultyArray = {"40", "12", "12", "8", "0.8", "0.4", "32", "2.0"};
 	
 	public static String[] tier6BiomesArray = {"Aether Void", "Arctic Peaks", "Black Ridge", "Crystal Spires", "Deceitful Bog", "Elysian Fields",
 			"Elysian Forest", "Forgotten Highlands", "Fungal Forest", "Glowing Fungi Forest", "Highlands", "Hilly Fungi Forest", "Hilly Vigilant Forest",
@@ -139,6 +141,9 @@ public class ConfigManager {
 		disableCategories = config.getBoolean("Disable Categories?", "0Main", false, "Setting this value to true will disable all biome checking, categorization, and subtitles (except ignored to help prevent biome spam). Instead all biome names will display as they are approached in aqua and with no subtitle. Nice for big modpacks with tons and tons of biomes you don't feel like configuring and you just want to know where you're going. See what I did there? :)");
 		enableDebug = config.getBoolean("Enable Debug?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableBiomeNav = config.getBoolean("Enable Biome Navigation Display?", "0Main", true, "Enabling this turn on the displaying of biome titles as you transition between them.");
+		enableRarespawnDebug = config.getBoolean("Enable Debug for Rarespawn logic?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
+		enableDebugBiomeHUD = config.getBoolean("Enable Debug for biome hud?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
+		enableBiomeDifficultyDebug = config.getBoolean("Enable Debug for Biome Difficulty?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		
 		timeFadeIn = config.getInt("Fade in Time", "Title Display Timings", timeFadeIn, 0, 100, "Amount of time it takes for the title to fade in. 0 will appear instantly and higher numbers will fade in more slowly. Whole number value measured in ticks (20 per second)");
 		displayTime = config.getInt("Display Time", "Title Display Timings", displayTime, 0, 100, "Amount of time the title displays at full opacity after fading in. 0 will instantly begin the fade out action and higher numbers will display for longer time. Whole number value measured in ticks (20 per second)");

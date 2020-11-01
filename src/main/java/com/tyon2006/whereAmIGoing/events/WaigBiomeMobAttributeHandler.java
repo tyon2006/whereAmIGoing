@@ -54,6 +54,11 @@ public class WaigBiomeMobAttributeHandler {
 		}
 		
 		Entity entity = event.getEntity();
+		
+		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
+		String biomeName = mobInBiome.getBiomeName();
+		
+		/*
 		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
 		String biomeName = mobInBiome.getRegistryName().toString();
 		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
@@ -64,7 +69,8 @@ public class WaigBiomeMobAttributeHandler {
 		biomeName = biomeName.replaceAll("With", " ");
 		biomeName = biomeName.replaceAll("Trees", " ");
 		biomeName = biomeName.trim();
-
+		 */
+		
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = event.getEntity().getEntityData();
 		entityNBT.setString("waigBiome", biomeName); 
@@ -218,7 +224,7 @@ public class WaigBiomeMobAttributeHandler {
 			entityLiving.setCustomNameTag(entityLiving.getName() + " " + mobHealth + " " + mobDamage + " " + mobArmor + " " + mobArmorToughness + " " + mobKnockbackResist + " " + mobFollowRange);
 		}
 		
-		entityNBT.setInteger("waigBiomeID", Biome.getIdForBiome(mobInBiome));
+		//entityNBT.setInteger("waigBiomeID", Biome.getIdForBiome(mobInBiome));
 		entityNBT.setBoolean("waigBiomeAttributeChecked", true);
 
 	}	

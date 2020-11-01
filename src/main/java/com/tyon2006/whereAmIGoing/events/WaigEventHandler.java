@@ -84,10 +84,10 @@ public class WaigEventHandler {
 		ticksExisted = Minecraft.getMinecraft().player.ticksExisted;
 		
 		if ((nextTrigger < ticksExisted) 
-				&& (currentPhase == "END"
+				&& currentPhase == "END"
 				//&& event.side.isClient() == true) 
-				&& biomeNameString != lastBiome)) {
-				//&& biomeNameString != lastLastBiome){	
+				&& biomeNameString != lastBiome
+				&& biomeNameString != lastLastBiome) {	
 
 			//if checking is disabled
 			if(ConfigManager.disableCategories == true) {
@@ -95,7 +95,7 @@ public class WaigEventHandler {
 				subTitle = "";
 				
 				if (excludedBiomesArrayList.contains(biomeNameString)) {
-					if (ConfigManager.enableDebug == true) System.out.println("Skipping biome: " + biomeNameString);
+					if (ConfigManager.enableDebugBiomeHUD == true) System.out.println("Skipping biome: " + biomeNameString);
 					nextTrigger = ticksExisted + ConfigManager.displayWait;
 					return;
 				} 
@@ -104,7 +104,7 @@ public class WaigEventHandler {
 				Minecraft.getMinecraft().ingameGUI.displayTitle(null, subTitle, 0, 0, 0);
 				Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 
-				if (ConfigManager.enableDebug == true) {
+				if (ConfigManager.enableDebugBiomeHUD == true) {
 					System.out.println("Detected biome: " + biomeNameString);
 					System.out.println("Found Biome change on Tick: " + ticksExisted); 			 
 				}
@@ -195,15 +195,19 @@ public class WaigEventHandler {
 			Minecraft.getMinecraft().ingameGUI.displayTitle(colorizedBiomeNameString, subTitle, ConfigManager.timeFadeIn, ConfigManager.displayTime, ConfigManager.timeFadeOut); //with TextFormatting
 			
 			//logs
-			if (ConfigManager.enableDebug == true) {
+			if (ConfigManager.enableDebugBiomeHUD == true) {
+				System.out.println("Current biome: " + biomeNameString); 
 				System.out.println("Last biome: " + lastBiome); 
 				System.out.println("Last last biome: " + lastLastBiome); 
-				System.out.println("Current biome: " + biomeNameString); 
+			}
+			
+			if(biomeNameString != lastBiome
+					&& biomeNameString != lastLastBiome) {
+				lastLastBiome = lastBiome;
+				lastBiome = biomeNameString;
 			}
 
 			//cleanup
-			//if (lastBiome != "") lastLastBiome = lastBiome;
-			lastBiome = biomeNameString;
 			biomeNameString = "";
 			subTitle = "";		
 			nextTrigger = ticksExisted + ConfigManager.displayWait;

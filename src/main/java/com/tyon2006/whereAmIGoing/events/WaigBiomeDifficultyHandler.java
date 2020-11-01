@@ -54,84 +54,84 @@ public class WaigBiomeDifficultyHandler {
 			String biomeName = mobInBiome.getBiomeName();
 					
 			if (tier1BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[0]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier2BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[1]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier3BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[2]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier4BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[3]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier5BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[4]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier6BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[5]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier7BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[6]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier8BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[7]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier9BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[8]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier10BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[9]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier11BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[10]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier12BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[11]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier13BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[12]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier14BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[13]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier15BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[14]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 			if (tier16BiomesArrayList.contains(biomeName)) {
-				if (ConfigManager.enableDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Found magic damage event to deal: " + e.getAmount());
 				e.setAmount((float) (e.getAmount()*(1-(ConfigManager.magicResistArray[15]))));
-				if (ConfigManager.enableDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
+				if (ConfigManager.enableBiomeDifficultyDebug) System.out.println("Reduced magic damage to: " + e.getAmount());
 			}
 		}
 	}
@@ -156,7 +156,7 @@ public class WaigBiomeDifficultyHandler {
 			}
 
 			if (entityNBT.hasKey("waigBiomeLevelChecked")){
-				if(ConfigManager.enableDebug) System.out.println("found " + entity.getName() + " already marked in " + biomeName);
+				if(ConfigManager.enableBiomeDifficultyDebug) System.out.println("found " + entity.getName() + " already marked in " + biomeName);
 				return;
 			}
 			
@@ -169,57 +169,56 @@ public class WaigBiomeDifficultyHandler {
 			double maxFollowRange = 0;
 			String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};  
 
-			if (tier1BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier1BiomesDifficultyArray;
+			if (tier1BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();
 			}
-			else if (tier2BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier2BiomesDifficultyArray;
+			else if (tier2BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier2BiomesDifficultyArray.clone();
 			}
-			else if (tier3BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier3BiomesDifficultyArray;
+			else if (tier3BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier3BiomesDifficultyArray.clone();
 			}
-			else if (tier4BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier4BiomesDifficultyArray;
+			else if (tier4BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier4BiomesDifficultyArray.clone();
 			}
-			else if (tier5BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier5BiomesDifficultyArray;
+			else if (tier5BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier5BiomesDifficultyArray.clone();
 			}
-			else if (tier6BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier6BiomesDifficultyArray;
-				System.out.println("shazam");
-				}
-			else if (tier7BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier7BiomesDifficultyArray;
+			else if (tier6BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier6BiomesDifficultyArray.clone();
 			}
-			else if (tier8BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier8BiomesDifficultyArray;
+			else if (tier7BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier7BiomesDifficultyArray.clone();
 			}
-			else if (tier9BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier9BiomesDifficultyArray;
+			else if (tier8BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier8BiomesDifficultyArray.clone();
 			}
-			else if (tier10BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier10BiomesDifficultyArray;
+			else if (tier9BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier9BiomesDifficultyArray.clone();
 			}
-			else if (tier11BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier11BiomesDifficultyArray;
+			else if (tier10BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier10BiomesDifficultyArray.clone();
 			}
-			else if (tier12BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier12BiomesDifficultyArray;
+			else if (tier11BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier11BiomesDifficultyArray.clone();
 			}
-			else if (tier13BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier13BiomesDifficultyArray;
+			else if (tier12BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier12BiomesDifficultyArray.clone();
 			}
-			else if (tier14BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier14BiomesDifficultyArray;
+			else if (tier13BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier13BiomesDifficultyArray.clone();
 			}
-			else if (tier15BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier15BiomesDifficultyArray;
+			else if (tier14BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier14BiomesDifficultyArray.clone();
 			}
-			else if (tier16BiomesArrayList.contains(biomeName)) {
-				difficultyValues = ConfigManager.tier16BiomesDifficultyArray;
+			else if (tier15BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier15BiomesDifficultyArray.clone();
+			}
+			else if (tier16BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+				difficultyValues = ConfigManager.tier16BiomesDifficultyArray.clone();
 			}
 			
-			if(ConfigManager.enableDebug) {
+			if(ConfigManager.enableBiomeDifficultyDebug) {
 				System.out.println(difficultyValues[0]);
 				System.out.println(difficultyValues[1]);
 				System.out.println(difficultyValues[2]);
@@ -229,7 +228,6 @@ public class WaigBiomeDifficultyHandler {
 				System.out.println(difficultyValues[6]);
 			}
 			
-			maxHealth = Double.parseDouble(difficultyValues[0]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
 			try {maxDamage = Double.parseDouble(difficultyValues[1]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();}
 			catch(Exception e) {}
 			maxArmor = Double.parseDouble(difficultyValues[2]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
@@ -238,10 +236,22 @@ public class WaigBiomeDifficultyHandler {
 			try {maxFollowRange= Double.parseDouble(difficultyValues[6]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).getAttributeValue();}
 			catch(Exception e) {}
 			//apply all the values
-			IAttributeInstance mobAttributeHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-			mobAttributeHealth.setBaseValue(maxHealth);
-			entityLiving.setHealth((float) maxHealth);
-			entityLiving.heal((float) maxHealth);
+			
+			IAttributeInstance mobAttributeHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH); 
+			if (mobAttributeHealth != null) {
+				System.out.println("new mob");
+				System.out.println(Double.parseDouble(difficultyValues[0]));
+				maxHealth = Double.parseDouble(difficultyValues[0]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
+				System.out.println(maxHealth);
+				
+				mobAttributeHealth.setBaseValue(maxHealth);
+				System.out.println(mobAttributeHealth.getBaseValue());
+				entityLiving.setHealth((float) maxHealth);
+				System.out.println(entityLiving.getMaxHealth());
+				System.out.println(entityLiving.getHealth());
+				//entityLiving.heal((float) maxHealth);
+			}
+			
 			try {
 			IAttributeInstance mobAttributeDamage = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
 			mobAttributeDamage.setBaseValue(maxDamage);
@@ -259,7 +269,7 @@ public class WaigBiomeDifficultyHandler {
 			}
 			catch(Exception e) {}
 			
-			if (ConfigManager.enableDebug) {
+			if (ConfigManager.enableBiomeDifficultyDebug) {
 				
 			}
 			entityNBT.setBoolean("waigBiomeLevelChecked", true);
@@ -277,9 +287,20 @@ public class WaigBiomeDifficultyHandler {
 		Entity entity = e.getEntity();
 		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
 		String biomeName = (mobInBiome.getRegistryName().toString());
-		System.out.println("HERE SHE COMES");
-				System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
-		
+		if(ConfigManager.enableBiomeDifficultyDebug == true) {
+			System.out.println("HERE SHE COMES");
+			System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
+		}
+				
+
+		/**
+		 * this might all be crap?
+		 * had to use biomeregistry name for a rendition of this feature
+		 * the resource for the actual biome name isnt available in the server space
+		 * was able to resolve this by moving this class back to the client proxy and from the server.
+		 * testing seems good, should work?
+		 */
+		/*
 		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
 		biomeName = biomeName.replace('_', ' ');
 		biomeName = WordUtils.capitalize(biomeName);
@@ -288,69 +309,73 @@ public class WaigBiomeDifficultyHandler {
 		biomeName = biomeName.replaceAll("With", " ");
 		biomeName = biomeName.replaceAll("Trees", " ");
 		biomeName = biomeName.trim();
+		*/
 		
-		System.out.println("BIOME: " + biomeName);
+		System.out.println("BIOME: " + (mobInBiome.getBiomeName()));
 		EntityLiving entityLiving = (EntityLiving) entity;
 		//NBTTagCompound entityNBT = e.getEntity().getEntityData();	
 		
 		String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};
 		
-		if (tier1BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier1BiomesDifficultyArray;
+		if (tier1BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();
 		}
-		else if (tier2BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier2BiomesDifficultyArray;
+		else if (tier2BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier2BiomesDifficultyArray.clone();
 		}
-		else if (tier3BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier3BiomesDifficultyArray;
+		else if (tier3BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier3BiomesDifficultyArray.clone();
 		}
-		else if (tier4BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier4BiomesDifficultyArray;
+		else if (tier4BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier4BiomesDifficultyArray.clone();
 		}
-		else if (tier5BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier5BiomesDifficultyArray;
+		else if (tier5BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier5BiomesDifficultyArray.clone();
 		}
-		else if (tier6BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier6BiomesDifficultyArray;
+		else if (tier6BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier6BiomesDifficultyArray.clone();
 		}
-		else if (tier7BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier7BiomesDifficultyArray;
+		else if (tier7BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier7BiomesDifficultyArray.clone();
 		}
-		else if (tier8BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier8BiomesDifficultyArray;
+		else if (tier8BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier8BiomesDifficultyArray.clone();
 		}
-		else if (tier9BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier9BiomesDifficultyArray;
+		else if (tier9BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier9BiomesDifficultyArray.clone();
 		}
-		else if (tier10BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier10BiomesDifficultyArray;
+		else if (tier10BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier10BiomesDifficultyArray.clone();
 		}
-		else if (tier11BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier11BiomesDifficultyArray;
+		else if (tier11BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier11BiomesDifficultyArray.clone();
 		}
-		else if (tier12BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier12BiomesDifficultyArray;
+		else if (tier12BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier12BiomesDifficultyArray.clone();
 		}
-		else if (tier13BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier13BiomesDifficultyArray;
+		else if (tier13BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier13BiomesDifficultyArray.clone();
 		}
-		else if (tier14BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier14BiomesDifficultyArray;
+		else if (tier14BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier14BiomesDifficultyArray.clone();
 		}
-		else if (tier15BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier15BiomesDifficultyArray;
+		else if (tier15BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier15BiomesDifficultyArray.clone();
 		}
-		else if (tier16BiomesArrayList.contains(biomeName)) {
-			difficultyValues = ConfigManager.tier16BiomesDifficultyArray;
+		else if (tier16BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+			difficultyValues = ConfigManager.tier16BiomesDifficultyArray.clone();
 		}
 		
+		System.out.print(difficultyValues.toString());
 		System.out.print(difficultyValues[7]);
 		float xpScale = Float.parseFloat(difficultyValues[7]);
 		
-		System.out.println("scale: " + xpScale);
-		System.out.println("final XP: " + (Math.round(e.getDroppedExperience()*xpScale)));
+		if(ConfigManager.enableDebugDifficultyHandler == true) { 
+			System.out.println("scale: " + xpScale);
+			System.out.println("final XP: " + (Math.round(e.getDroppedExperience()*xpScale)));
+		}
 		
-        if(ConfigManager.enableDebug) {
+        if(ConfigManager.enableBiomeDifficultyDebug) {
         }
 		
 		{

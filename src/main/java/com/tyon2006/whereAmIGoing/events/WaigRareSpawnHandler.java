@@ -40,14 +40,14 @@ public class WaigRareSpawnHandler {
         if (event.getEntityLiving().isDead) return;
         if (!(ConfigManager.rareSpawnMap.containsKey(event.getEntity().getName().toLowerCase()))) return;
 		if (event.getEntity().getEntityData().hasKey("waigRareSpawnChecked")){
-			if(ConfigManager.enableDebug == true) System.out.println("skipping already bonused");
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("skipping already bonused");
 			return;
 		}
         
 		Entity entity = event.getEntity();
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = entity.getEntityData();
-		
+				
 		mobAttMap.putAll(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()));
 		
 		if(mobAttMap.containsKey("rareSpawnBiome")) {
@@ -55,9 +55,9 @@ public class WaigRareSpawnHandler {
 			String biomeName = (entity.getEntityWorld().getBiome(entity.getPosition())).getBiomeName();
 			if (biomeName != checkBiomeName) return;
 		}
-		
-		if (ConfigManager.enableDebug == true) {
-			System.out.println("FOUND A THING NAMED " + entity.getName().toLowerCase());
+				
+		if (ConfigManager.enableRarespawnDebug == true) {
+			System.out.println("FOUND A MOB NAMED " + entity.getName().toLowerCase());
 			System.out.println("MAP OUTPUTFOR " + entity.getName().toLowerCase());
 			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
 			System.out.println(ConfigManager.rareSpawnMap.toString()); 
@@ -71,7 +71,7 @@ public class WaigRareSpawnHandler {
 		if (randy > Integer.parseInt(mobAttMap.get("spawnchance"))) {
             
 			EntityLivingBase mob = entityLiving;
-            if(ConfigManager.enableDebug == true) System.out.println("WINNER WINNER " + entity.getEntityId() + " DINNER. RANDO - " + randy);
+            if(ConfigManager.enableRarespawnDebug == true) System.out.println("WINNER WINNER " + entity.getEntityId() + " DINNER. RANDO - " + randy);
 
 			entityNBT.setBoolean("waigIsRare", true); //this is the good one. thanks kindlich!
 			entityNBT.setString("waigMobName", entity.getName().toLowerCase()); //add name back to the mob so it can be found for item drops
@@ -79,7 +79,7 @@ public class WaigRareSpawnHandler {
 			entityLiving.setCustomNameTag(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnname"));// + "HEALTH:" + " ID:" + event.getEntity().getEntityId() );
 			entity.setAlwaysRenderNameTag(true);
             //mob.setGlowing(true);
-            
+            		
             //armor
             if(mobAttMap.containsKey("armor") 
             		&& mobAttMap.get("armor") != null) 
@@ -210,7 +210,7 @@ public class WaigRareSpawnHandler {
 		NBTTagCompound entityNBT = e.getEntity().getEntityData();
 		
 		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
-			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
+			if (ConfigManager.enableRarespawnDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
 		}	
 		
@@ -227,7 +227,7 @@ public class WaigRareSpawnHandler {
 		if(!(e.getEntityLiving() instanceof EntityLiving))return;
 
 		if(!(e.getEntityLiving().getEntityData().hasKey("waigIsRare"))) {
-			if (ConfigManager.enableDebug == true) System.out.println("NO TAG FOUND SKIPPING");
+			if (ConfigManager.enableRarespawnDebug == true) System.out.println("NO TAG FOUND SKIPPING");
 			return;
 		}
 		
@@ -253,7 +253,7 @@ public class WaigRareSpawnHandler {
 				System.out.println(dropNBTString);
 			}
 
-			if (ConfigManager.enableDebug == true) {
+			if (ConfigManager.enableRarespawnDebug == true) {
 				System.out.println("dropping item:");
 				System.out.println(dropModIDString);
 				System.out.println(dropItemIDString);
