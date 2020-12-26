@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
 
 import net.minecraft.entity.Entity;
@@ -16,6 +14,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -136,8 +135,9 @@ public class WaigBiomeDifficultyHandler {
 		}
 	}
 	
-	@SubscribeEvent(priority = EventPriority.HIGH)
+	@SubscribeEvent(priority = EventPriority.NORMAL)
 	//@SideOnly(Side.CLIENT)
+	
 	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
 
 		if (event.getEntity() instanceof EntityPlayerMP) return;
@@ -145,16 +145,28 @@ public class WaigBiomeDifficultyHandler {
 			
 			Entity entity = event.getEntity();
 			Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
+			
+			ResourceLocation loc = Biome.REGISTRY.getNameForObject(mobInBiome);
+			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println("FOUND MOB IN RESOURCE LOCATION");}
+			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println("Resource location to string");}
+			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(loc.toString());}
+					
 			String biomeName = mobInBiome.getRegistryName().toString();
 			EntityLiving entityLiving = (EntityLiving) entity;
 			NBTTagCompound entityNBT = event.getEntity().getEntityData();
-
 			
+			//skip ambient
 			if (entityLiving.isCreatureType(EnumCreatureType.AMBIENT, false)) {
 				entityNBT.setBoolean("waigBiomeLevelChecked", true);
 				return;
 			}
-
+			
+			//skip creatures
+			if (entityLiving.isCreatureType(EnumCreatureType.CREATURE, false)) {
+				entityNBT.setBoolean("waigBiomeLevelChecked", true);
+				return;
+			}
+			
 			if (entityNBT.hasKey("waigBiomeLevelChecked")){
 				if(ConfigManager.enableBiomeDifficultyDebug) System.out.println("found " + entity.getName() + " already marked in " + biomeName);
 				return;
@@ -239,16 +251,17 @@ public class WaigBiomeDifficultyHandler {
 			
 			IAttributeInstance mobAttributeHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH); 
 			if (mobAttributeHealth != null) {
-				System.out.println("new mob");
-				System.out.println(Double.parseDouble(difficultyValues[0]));
+				
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println("new mob");}
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(Double.parseDouble(difficultyValues[0]));}
 				maxHealth = Double.parseDouble(difficultyValues[0]) + entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
-				System.out.println(maxHealth);
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(maxHealth);}
 				
 				mobAttributeHealth.setBaseValue(maxHealth);
-				System.out.println(mobAttributeHealth.getBaseValue());
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(mobAttributeHealth.getBaseValue());}
 				entityLiving.setHealth((float) maxHealth);
-				System.out.println(entityLiving.getMaxHealth());
-				System.out.println(entityLiving.getHealth());
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(entityLiving.getMaxHealth());}
+				if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(entityLiving.getHealth());}
 				//entityLiving.heal((float) maxHealth);
 			}
 			
@@ -286,7 +299,9 @@ public class WaigBiomeDifficultyHandler {
 		
 		Entity entity = e.getEntity();
 		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
+
 		String biomeName = (mobInBiome.getRegistryName().toString());
+		
 		if(ConfigManager.enableBiomeDifficultyDebug == true) {
 			System.out.println("HERE SHE COMES");
 			System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
@@ -383,4 +398,6 @@ public class WaigBiomeDifficultyHandler {
 			return;
 		} 
 	}
+	
+	
 }

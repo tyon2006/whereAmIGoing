@@ -23,6 +23,7 @@ import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.world.biome.Biome;
 
 import java.util.Random;
 import net.minecraft.init.MobEffects;
@@ -30,21 +31,37 @@ import net.minecraft.init.MobEffects;
 public class WaigRareSpawnHandler {
 
 	public static Map<String, String> mobAttMap = new HashMap<String, String>();
-		
+	
 	@SubscribeEvent (priority = EventPriority.HIGHEST)
 	public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
 		
-        if (event.getWorld().isRemote) return;
-		if (!(event.getEntity() instanceof EntityLiving)) return;
-		if (event.getEntity() instanceof EntityPlayerMP) return;
-        if (event.getEntityLiving().isDead) return;
-        if (!(ConfigManager.rareSpawnMap.containsKey(event.getEntity().getName().toLowerCase()))) return;
+		if(ConfigManager.enableRarespawnDebug == true) System.out.println("*CHECKING FOR RARE SPAWN*");
+        //if (event.getWorld().isRemote) return;
+		if (!(event.getEntity() instanceof EntityLiving)) {
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB NOT LIVING - SKIPPING");
+			return;
+		}
+		if (event.getEntity() instanceof EntityPlayerMP){
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB IS A PLAYER - SKIPPING");
+			return;
+		}
+        if (event.getEntityLiving().isDead){
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB WAS FOUND DEAD - SKIPPING");
+			return;
+		}
+        if (!(ConfigManager.rareSpawnMap.containsKey(event.getEntity().getName().toLowerCase()))){
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println(event.getEntity().getName().toLowerCase() + " NOT FOUND IN RARESPAWN MAP- SKIPPING");
+			return;
+		}
 		if (event.getEntity().getEntityData().hasKey("waigRareSpawnChecked")){
-			if(ConfigManager.enableRarespawnDebug == true) System.out.println("skipping already bonused");
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB ALREADY RARE - SKIPPING");
 			return;
 		}
         
+		if(ConfigManager.enableRarespawnDebug == true) System.out.println("NO SKIPS - ATTEMPTING TO RARIFY MOB: " + event.getEntity().getName().toLowerCase());
+		
 		Entity entity = event.getEntity();
+		
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = entity.getEntityData();
 				
@@ -52,23 +69,32 @@ public class WaigRareSpawnHandler {
 		
 		if(mobAttMap.containsKey("rareSpawnBiome")) {
 			String checkBiomeName = mobAttMap.get("rareSpawnBiome");
-			String biomeName = (entity.getEntityWorld().getBiome(entity.getPosition())).getBiomeName();
-			if (biomeName != checkBiomeName) return;
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB WILL ONLY SPAWN IN: " + checkBiomeName);
+			//String biomeName = (entity.getEntityWorld().getBiome(entity.getPosition())).getBiomeName(); //bad, old factor when i was too lazy to use full resource name for comparison
+			String biomeName = entity.getEntityWorld().getBiome(entity.getPosition()).getRegistryName().toString();
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB FOUND IN: " + biomeName);
+			if (!biomeName.equals(checkBiomeName)) {
+				if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB NOT FOUND IN CORRECT BIOME - SKIPPING");
+				return;
+			}
 		}
 				
 		if (ConfigManager.enableRarespawnDebug == true) {
 			System.out.println("FOUND A MOB NAMED " + entity.getName().toLowerCase());
 			System.out.println("MAP OUTPUTFOR " + entity.getName().toLowerCase());
 			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
-			System.out.println(ConfigManager.rareSpawnMap.toString()); 
-			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase())); 
 			System.out.println(ConfigManager.rareSpawnMap.get(entity.getName().toLowerCase()).get("spawnchance"));
 			System.out.println("adding health to: " + entity.getName() + " " + event.getEntity().getEntityId());
 		}
 		
 		int randy = new Random().nextInt(100);
+		int spawnChance = Integer.parseInt(mobAttMap.get("spawnchance"));
 		
-		if (randy > Integer.parseInt(mobAttMap.get("spawnchance"))) {
+		if (randy > spawnChance) {
+			if(ConfigManager.enableRarespawnDebug == true) System.out.println("rolled a :" + randy + ". Not higher than spawnchance: " + spawnChance);
+			return;
+		}
+		else if (randy <= spawnChance) {
             
 			EntityLivingBase mob = entityLiving;
             if(ConfigManager.enableRarespawnDebug == true) System.out.println("WINNER WINNER " + entity.getEntityId() + " DINNER. RANDO - " + randy);

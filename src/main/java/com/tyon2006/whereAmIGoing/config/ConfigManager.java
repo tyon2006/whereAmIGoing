@@ -1,21 +1,24 @@
 package com.tyon2006.whereAmIGoing.config;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConfigManager {
 	
 	public static Configuration config;
-	
+		
 	public static boolean disableCategories = false;
 	public static boolean enableBiomeNav = true;
 	public static boolean enableDebugBiomeHUD = false;
 	public static boolean enableDebug = false;
-	public static boolean enableDebugDifficultyHandler = true;
+	public static boolean enableDebugDifficultyHandler = false;
 	public static boolean enableRarespawn = true;
 	public static boolean enableRarespawnDebug = true;
 	public static boolean enableBiomeDifficulty = true;
@@ -28,46 +31,81 @@ public class ConfigManager {
 	public static int timeFadeOut = 20;
 	public static int displayWait = 40;
 	
-	public static String[] tier1BiomesArray = {"Birch Forest", "Boreal Forest", "Brushland", "Dead Forest", "Desert", "Flower Forest", "Forest", 
-			"Grassland", "Gravel Beach", "Grove", "Highland", "Jungle", "Jungle M", "Marsh", "Mega Spruce Taiga", "Mesa (Bryce)", "Mountain", 
-			"Ocean", "Orchard", "Origin Beach", "Origin Island", "Plains", "Savanna", "Stone Beach", "Swampland", "Taiga", "Taiga M", "White Beach"};
-	public static String tier1Subtitle = "Level 1 Biome";
-	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "1"};
-	//add health, add damage, add armor, add armor toughness, add knockback resist, magic resist, follow range, xp bonus
+	public static ArrayList<ResourceLocation> tier1BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier2BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier3BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier4BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier5BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier6BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier7BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier8BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier9BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier10BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier11BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier12BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier13BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier14BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier15BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> tier16BiomeResLoc = new ArrayList<ResourceLocation>();
+	public static ArrayList<ResourceLocation> excludedBiomeResLoc = new ArrayList<ResourceLocation>();
 	
-	public static String[] tier2BiomesArray = {"Birch Forest Hills", "Birch Forest M", "Cold Desert", "Dried Reef", "Extreme Hills", "Extreme Hills Edge",
-			"Fen", "ForestHills", "FrozenOcean", "JungleEdge", "Lavender Fields", "Meadow", "MushroomIsland", "MushroomIslandShore",
-			"Mystic Grove", "Pasture", "Prairie", "Rainforest", "Sacred Springs", "Savanna M", "Savanna Plateau M", "Shrubland",
-			"Snowy Coniferous Forest", "Swampland M", "TaigaHills", "The Abyss", "Wetland"};
+	public static String[] tier1BiomesArray = {"minecraft:birch_forest", "biomesoplenty:boreal_forest", 
+			"biomesoplenty:brushland", "biomesoplenty:dead_forest", "minecraft:desert", "minecraft:mutated_forest", 
+			"minecraft:forest", "biomesoplenty:grassland", "biomesoplenty:gravel_beach", "biomesoplenty:grove", 
+			"biomesoplenty:highland", "minecraft:jungle", "minecraft:mutated_jungle", "biomesoplenty:marsh", "minecraft:mutated_redwood_taiga", 
+			"minecraft:mutated_mesa", "biomesoplenty:mountain", "minecraft:ocean", "biomesoplenty:orchard", "biomesoplenty:origin_beach", 
+			"biomesoplenty:origin_island", "minecraft:plains", "minecraft:savanna", "minecraft:stone_beach", "minecraft:swampland", 
+			"minecraft:taiga", "minecraft:mutated_taiga", "biomesoplenty:white_beach"};
+	public static String tier1Subtitle = "Level 1 Biome";
+	//add health, add damage, add armor, add armor toughness, add knockback resist, magic resist, follow range, xp bonus
+	public static String[] tier1BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "1"};
+
+	public static String[] tier2BiomesArray = {"minecraft:birch_forest_hills", "minecraft:mutated_birch_forest", "biomesoplenty:cold_desert", 
+			"beasts:dried_reef", "minecraft:extreme_hills", "minecraft:smaller_extreme_hills", "biomesoplenty:fen", "minecraft:forest_hills", 
+			"minecraft:frozen_ocean", "minecraft:jungle_edge", "biomesoplenty:lavender_fields", "biomesoplenty:meadow", "minecraft:mushroom_island", 
+			"minecraft:mushroom_island_shore", "biomesoplenty:mystic_grove", "biomesoplenty:pasture", "biomesoplenty:prairie",
+			"biomesoplenty:rainforest", "biomesoplenty:sacred_springs", "minecraft:mutated_savanna", "minecraft:mutated_savanna_rock",
+			"biomesoplenty:shrubland", "biomesoplenty:snowy_coniferous_forest", "minecraft:mutated_swampland", "minecraft:taiga_hills", 
+			"beasts:the_abyss", "biomesoplenty:wetland"};
 	public static String tier2Subtitle = "Level 2 Biome";
 	public static String[] tier2BiomesDifficultyArray = {"10", "2", "3", "2", "0.1", "0.1", "8", "1.25"};
 	
-	public static String[] tier3BiomesArray = {"Birch Forest Hills M", "Bog", "Cherry Blossom Grove", "Cold Taiga", "Coniferous Forest", "Coral Reef",
-			"Eucalyptus Forest", "Extreme Hills M", "Extreme Hills+", "Flower Field", "Ice Plains", "JungleHills", "Kelp Forest", "Land of Lakes", 
-			"Lush Desert", "Lush Swamp", "Magical Forest", "Maple Woods", "Mega Taiga Hills", "Mesa Plateau F M", "Mesa Plateau M", "MountainFoothills",
-			"Outback", "Seasonal Forest", "Steppe", "Sunflower Plains", "Temperate Rainforest", "Volcanic Island"};
+	public static String[] tier3BiomesArray = {"biomesoplenty:bog", "biomesoplenty:cherry_blossom_grove", "minecraft:taiga_cold",
+			"biomesoplenty:coniferous_forest", "biomesoplenty:coral_reef", "biomesoplenty:eucalyptus_forest", "minecraft:mutated_extreme_hills",
+			"minecraft:extreme_hills_with_trees", "biomesoplenty:flower_field", "minecraft:ice_flats", "minecraft:jungle_hills",
+			"biomesoplenty:kelp_forest", "biomesoplenty:land_of_lakes", "biomesoplenty:lush_desert", "biomesoplenty:lush_swamp", 
+			"thaumcraft:magical_forest", "biomesoplenty:maple_woods", "minecraft:redwood_taiga_hills", "minecraft:mutated_mesa_rock",
+			"minecraft:mutated_mesa_clear_rock", "biomesoplenty:mountain_foothills", "biomesoplenty:outback", "biomesoplenty:seasonal_forest",
+			"biomesoplenty:steppe", "minecraft:mutated_plains", "biomesoplenty:temperate_rainforest", "biomesoplenty:volcanic_island"};
 	public static String tier3Subtitle = "Level 3 Biome";
 	public static String[] tier3BiomesDifficultyArray = {"20", "5", "6", "4", "0.3", "0.2", "16", "1.5"};
 	
-	public static String[] tier4BiomesArray = {"Alps", "AlpsFoothills", "Arctic Abyss", "Bamboo Forest", "Bayou", "Chaparral", "Cold Taiga Hills",
-			"Cold Taiga M", "Corrupted Sands", "Crag", "Extreme Hills+ M", "Flower Island", "Fungi Forest", "Fungi Forest", "Hell", "JungleEdge M",
-			"Mangrove", "Mega Taiga", "Mesa", "Mesa Plateau", "Moor", "Oasis", "Phantasmagoric Inferno", "RedwoodForestEdge", "Roofed Forest",
-			"Ruthless Sands", "Shield", "Snowy Forest", "Torrid Wasteland", "treasure", "Tropical Rainforest", "Undergarden", "Visceral Heap",
-			"Woodland", "Xeric Shrubland"};
+	public static String[] tier4BiomesArray = {"biomesoplenty:alps", "biomesoplenty:alps_foothills", "netherex:arctic_abyss", "biomesoplenty:bamboo_forest",
+			"biomesoplenty:bayou", "biomesoplenty:chaparral", "minecraft:taiga_cold_hills", "minecraft:mutated_taiga_cold", "biomesoplenty:corrupted_sands",
+			"biomesoplenty:crag", "minecraft:mutated_extreme_hills_with_trees", "biomesoplenty:flower_island", "netherex:fungi_forest",
+			"biomesoplenty:fungi_forest", "minecraft:hell", "minecraft:mutated_jungle_edge", "biomesoplenty:mangrove", "minecraft:redwood_taiga",
+			"minecraft:mesa", "minecraft:mesa_clear_rock", "biomesoplenty:moor", "biomesoplenty:oasis", "biomesoplenty:phantasmagoric_inferno",
+			"biomesoplenty:redwood_forest_edge", "minecraft:roofed_forest", "netherex:ruthless_sands", "biomesoplenty:shield", "biomesoplenty:snowy_forest",
+			"netherex:torrid_wasteland", "fossil:treasure", "biomesoplenty:tropical_rainforest", "biomesoplenty:undergarden", "biomesoplenty:visceral_heap",
+			"biomesoplenty:woodland", "biomesoplenty:xeric_shrubland"};
 	public static String tier4Subtitle = "Level 4 Biome";
 	public static String[] tier4BiomesDifficultyArray = {"30", "9", "9", "6", "0.6", "0.3", "24", "1.75"};
 	
-	public static String[] tier5BiomesArray = {"Dead Swamp", "Deep Ocean", "Desert M", "DesertHills", "Eerie", "Glacier", "Ice Mountains", 
-			"Ice Plains Spikes", "Mesa Plateau F", "Ominous Woods", "Overgrown Cliffs", "Quagmire", "Redwood Taiga Hills M", "RedwoodForest", 
-			"Roofed Forest M", "Savanna Plateau", "SnowyTundra", "The End", "The Void", "Tropical Island", "Tundra", "Wasteland"};
+	public static String[] tier5BiomesArray = {"biomesoplenty:dead_swamp", "minecraft:deep_ocean", "minecraft:mutated_desert", "minecraft:desert_hills",
+			"thaumcraft:eerie", "biomesoplenty:glacier", "minecraft:ice_mountains", "minecraft:mutated_ice_flats", "minecraft:mesa_rock",
+			"biomesoplenty:ominous_woods", "biomesoplenty:overgrown_cliffs", "biomesoplenty:quagmire", "minecraft:mutated_redwood_taiga_hills",
+			"biomesoplenty:redwood_forest", "minecraft:mutated_roofed_forest", "minecraft:savanna_rock", "biomesoplenty:snowy_tundra", "minecraft:sky",
+			"minecraft:void", "biomesoplenty:tropical_island", "biomesoplenty:tundra", "biomesoplenty:wasteland"};
 	public static String tier5Subtitle = "Level 5 Biome";
 	public static String[] tier5BiomesDifficultyArray = {"40", "12", "12", "8", "0.8", "0.4", "32", "2.0"};
 	
-	public static String[] tier6BiomesArray = {"Aether Void", "Arctic Peaks", "Black Ridge", "Crystal Spires", "Deceitful Bog", "Elysian Fields",
-			"Elysian Forest", "Forgotten Highlands", "Fungal Forest", "Glowing Fungi Forest", "Highlands", "Hilly Fungi Forest", "Hilly Vigilant Forest",
-			"Instanced Zone", "Irradiated Forests", "Magnetic Hills", "Night Plains", "Obscured Peaks", "Obscured Plateau", "Petrified Forest",
-			"Phantasmal Valley", "Runebush Grove", "Submerged Swamp", "Subterranean Savannah", "Ulterior Outback", "Underground Jungle", 
-			"Vigilant Forest", "Volcanic Desert", "Warped Fields"};
+	public static String[] tier6BiomesArray = {"aether:aether_void", "aether:aether_arctic_peaks", "midnight:black_ridge", "midnight:crystal_spires",
+			"midnight:deceitful_bog", "erebus:elysian_fields", "erebus:fields_sub_forest", "aether:aether_forgotten_highlands", "erebus:fungal_forest",
+			"midnight:fungi_forest", "aether:aether_highlands", "midnight:hilly_fungi_forest", "midnight:hilly_vigilant_forest", "aether:instanced_zone",
+			"aether:aether_irradiated_forests", "aether:aether_magnetic_hills", "midnight:night_plains", "midnight:obscured_peaks",
+			"midnight:obscured_plateau", "erebus:petrified_forest", "midnight:phantasmal_valley", "midnight:runebush_grove", "erebus:submerged_swamp",
+			"erebus:subterranean_savannah", "erebus:ulterior_outback", "erebus:underground_jungle", "midnight:vigilant_forest", "erebus:volcanic_desert",
+			"midnight:warped_fields"};
 	public static String tier6Subtitle = "Level 6 Biome";
 	public static String[] tier6BiomesDifficultyArray = {"50", "15", "30", "20", "0.9", "0.5", "40", "2.25"};
 	
@@ -111,15 +149,15 @@ public class ConfigManager {
 	public static String tier16Subtitle = "";	
 	public static String[] tier16BiomesDifficultyArray = {"0", "0", "0", "0", "0", "0", "0", "0"};
 	
-	public static String[] excludedBiomesArray = {"River", "Cold Beach", "Beach", "Frozen River"};
+	public static String[] excludedBiomesArray = {"minecraft:river", "minecraft:cold_beach", "minecraft:beaches", "minecraft:frozen_river"};
 	public static float[] magicResistArray = new float[16];
 	
 	public static File configFileTemp;
 
 	public static float rareSpawnXPboost = 2;
 	public static String[] rareSpawnArrayRaw = {
-			"zombie|Poque the Dreadful|20|addhealth|20|drops|minecraft:grass|potion|regeneration", 
-			"enderman|Slim|20|addhealth|20|drops|minecraft:ender_pearl|potion|strength"};
+			"zombie|Poque the Dreadful|100|rareSpawnBiome|minecraft:taiga|addhealth|20|drops|minecraft:grass|potion|regeneration", 
+			"enderman|Slim|100|rareSpawnBiome|minecraft:taiga|addhealth|20|drops|minecraft:ender_pearl|potion|strength"};
 	public static Map<String, String> mapSet = new HashMap<String, String>();
 	public static Map<String, String> mobAttSet = new HashMap<String, String>();
 	public static Map<String, Map<String, String>> rareSpawnMap = new HashMap<String, Map<String, String>>();
@@ -136,12 +174,12 @@ public class ConfigManager {
 	
 	public static void load()
 	{	
-		enableBiomeDifficulty= config.getBoolean("Enable Rarespawn Module?", "0Main", true, "Enables rarespawn module. Note, requires configuration below.");
+		enableBiomeDifficulty= config.getBoolean("Enable Biome Difficulty Module?", "0Main", true, "Enables Biome Difficulty module. Note, requires configuration below.");
 		enableRarespawn = config.getBoolean("Enable Rarespawn Module?", "0Main", true, "Enables rarespawn module. Note, requires configuration below.");
 		disableCategories = config.getBoolean("Disable Categories?", "0Main", false, "Setting this value to true will disable all biome checking, categorization, and subtitles (except ignored to help prevent biome spam). Instead all biome names will display as they are approached in aqua and with no subtitle. Nice for big modpacks with tons and tons of biomes you don't feel like configuring and you just want to know where you're going. See what I did there? :)");
 		enableDebug = config.getBoolean("Enable Debug?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableBiomeNav = config.getBoolean("Enable Biome Navigation Display?", "0Main", true, "Enabling this turn on the displaying of biome titles as you transition between them.");
-		enableRarespawnDebug = config.getBoolean("Enable Debug for Rarespawn logic?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
+		enableRarespawnDebug = config.getBoolean("Enable Debug for Rarespawn logic?", "0Main", true, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableDebugBiomeHUD = config.getBoolean("Enable Debug for biome hud?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableBiomeDifficultyDebug = config.getBoolean("Enable Debug for Biome Difficulty?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		
@@ -150,7 +188,7 @@ public class ConfigManager {
 		timeFadeOut = config.getInt("Fade out Time", "Title Display Timings", timeFadeOut, 0, 100, "Amount of time is takes for the title to fade out after displaying. 0 will instantly disappear after displaying and higher numbers will fade out more slowly. Whole number value measured in ticks (20 per second)");
 		displayWait = config.getInt("Time between Updates", "Title Display Timings", displayWait, 20, 1200, "Amount of time to wait until displaying the title again. Lower numbers will display updates faster/more often with higher numbers displaying less often. Whole number value measured in ticks (20 per second)");
 		
-		rareSpawnArrayRaw = config.getStringList("Rarespawn Entries", "Rarespawn", rareSpawnArrayRaw, "Enter 1 line per mob starting with the name of the mob, then name, then the percent chance of spawning, followed by attritbute name and value pairs.");
+		rareSpawnArrayRaw = config.getStringList("Rarespawn Entries", "Rarespawn", rareSpawnArrayRaw, "Enter 1 line per mob starting with the name of the mob, then name, then the percent chance of spawning, followed by attritbute name and value pairs. Can also handle rareSpawnBiome if you only want the rarespawn to appear in a single biome type");
 		rareSpawnXPboost = config.getFloat("Rarespawn XP Booster", "Rarespawn", rareSpawnXPboost, 1f, 1000.0f, "When a Rarespawn is killed, it will drop its default XP value times the number provided here. For example, entering 2 gives you double (times 2) the amount of XP Accepts float values.");
 		
 		tier1Subtitle = config.getString("Category 1 Title", "Biome Category Names", tier1Subtitle, "Words that display at the subtitle of Category 1 biomes.");
@@ -209,8 +247,76 @@ public class ConfigManager {
 		if (config.hasChanged()) config.save();
 		if (enableRarespawn) parseRarespawnStringToMap();
 		if (enableBiomeDifficulty) parseMagicResistValues();
+		parseBiomeResLoc();
+		
 	}
 
+	public static void parseBiomeResLoc() {	
+		for (String resLoc : tier1BiomesArray) {
+			tier1BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier2BiomeResLoc.toString());
+		for (String resLoc : tier2BiomesArray) {
+			tier2BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier3BiomeResLoc.toString());
+		for (String resLoc : tier3BiomesArray) {
+			tier3BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier4BiomeResLoc.toString());
+		for (String resLoc : tier4BiomesArray) {
+			tier4BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier5BiomeResLoc.toString());
+		for (String resLoc : tier5BiomesArray) {
+			tier5BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier6BiomeResLoc.toString());
+		for (String resLoc : tier6BiomesArray) {
+			tier6BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier7BiomeResLoc.toString());
+		for (String resLoc : tier7BiomesArray) {
+			tier7BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier8BiomeResLoc.toString());
+		for (String resLoc : tier8BiomesArray) {
+			tier8BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier9BiomeResLoc.toString());
+		for (String resLoc : tier9BiomesArray) {
+			tier9BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier10BiomeResLoc.toString());
+		for (String resLoc : tier10BiomesArray) {
+			tier10BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier11BiomeResLoc.toString());
+		for (String resLoc : tier11BiomesArray) {
+			tier11BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier12BiomeResLoc.toString());
+		for (String resLoc : tier12BiomesArray) {
+			tier12BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier13BiomeResLoc.toString());
+		for (String resLoc : tier13BiomesArray) {
+			tier13BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier14BiomeResLoc.toString());
+		for (String resLoc : tier14BiomesArray) {
+			tier14BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier15BiomeResLoc.toString());
+		for (String resLoc : tier15BiomesArray) {
+			tier15BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier16BiomeResLoc.toString());
+		for (String resLoc : tier16BiomesArray) {
+			tier16BiomeResLoc.add(new ResourceLocation(resLoc));
+		}
+		System.out.println("WAIG loaded biomes:" + tier1BiomeResLoc.toString());
+	}
 	public static void parseMagicResistValues() {
 		
 		magicResistArray[0] = Float.parseFloat(tier1BiomesDifficultyArray[5]);
@@ -248,7 +354,7 @@ public class ConfigManager {
 	public Map<String, String> getAttributesFromMob(String mobName) {
 		mobAttSet.clear();
 		mobAttSet.putAll(rareSpawnMap.get(mobName));
-		return mobAttSet;
+		return mobAttSet; 
 	}
 	
 	@SuppressWarnings("null")

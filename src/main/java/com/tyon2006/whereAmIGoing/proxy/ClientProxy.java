@@ -17,7 +17,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		if(ConfigManager.enableBiomeNav==true) MinecraftForge.EVENT_BUS.register(new WaigEventHandler());
-		if(ConfigManager.enableRarespawn==true) MinecraftForge.EVENT_BUS.register(new WaigBiomeDifficultyHandler());
+
 		if(ConfigManager.enableBiomeAttributeTweaks==true) MinecraftForge.EVENT_BUS.register(biomeColorRenderer.class);
 		if(ConfigManager.enableBiomeAttributeTweaks==true) MinecraftForge.EVENT_BUS.register(new WaigBiomeMobAttributeHandler());
 		
