@@ -21,6 +21,9 @@ public class WaigEventHandler {
 	public String lastBiome = "";
 	public String lastLastBiome = "";
 	
+	public ResourceLocation lastBiomeResLoc;
+	public ResourceLocation lastLastBiomeResLoc;
+	
 	/* //code refactor no longer needs these?
 	public static List<String> tier1BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier1BiomesArray));
 	public static List<String> tier2BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier2BiomesArray));
@@ -61,8 +64,11 @@ public class WaigEventHandler {
 		if ((nextTrigger < ticksExisted) 
 				&& event.phase == Phase.END //does this check work? if so delete the currentPhase line
 				//&& event.side.isClient() == true) 
+				&& biomeResLoc != lastBiomeResLoc
+				&& biomeResLoc != lastLastBiomeResLoc
 				&& biomeNameString != lastBiome
-				&& biomeNameString != lastLastBiome) {	
+				&& biomeNameString != lastLastBiome
+				) {	
 
 			//if checking is disabled, set AQUA and return
 			if(ConfigManager.disableCategories == true) {
@@ -84,6 +90,8 @@ public class WaigEventHandler {
 					System.out.println("Found Biome change on Tick: " + ticksExisted); 			 
 				}
 
+				lastBiomeResLoc = biomeResLoc;
+				
 				lastBiome = biomeNameString;
 				biomeNameString = "";
 				nextTrigger = ticksExisted + ConfigManager.displayWait;
@@ -108,6 +116,12 @@ public class WaigEventHandler {
 					&& biomeNameString != lastLastBiome) {
 				lastLastBiome = lastBiome;
 				lastBiome = biomeNameString;
+			}
+			
+			if(biomeResLoc != lastBiomeResLoc
+				&& biomeResLoc != lastLastBiomeResLoc) {
+					lastLastBiomeResLoc = lastBiomeResLoc;
+					lastBiomeResLoc = biomeResLoc;
 			}
 
 			//cleanup

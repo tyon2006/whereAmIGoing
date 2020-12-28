@@ -38,7 +38,7 @@ public class WaigBiomeMobAttributeHandler {
 	}
 	*/
 	
-	@SubscribeEvent(priority = EventPriority.NORMAL)
+	@SubscribeEvent(priority = EventPriority.HIGH)
 	//@SideOnly(Side.CLIENT)
 	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
 
@@ -56,24 +56,11 @@ public class WaigBiomeMobAttributeHandler {
 		Entity entity = event.getEntity();
 		
 		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
-		String biomeName = mobInBiome.getBiomeName();
-		
-		/*
-		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
-		String biomeName = mobInBiome.getRegistryName().toString();
-		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
-		biomeName = biomeName.replace('_', ' ');
-		biomeName = WordUtils.capitalize(biomeName);
-		biomeName = biomeName.replaceAll("Mutated", " ");
-		biomeName = biomeName.replaceAll("Smaller", " ");
-		biomeName = biomeName.replaceAll("With", " ");
-		biomeName = biomeName.replaceAll("Trees", " ");
-		biomeName = biomeName.trim();
-		 */
-		
+		//String biomeName = mobInBiome.getBiomeName();
+				
 		EntityLiving entityLiving = (EntityLiving) entity;
 		NBTTagCompound entityNBT = event.getEntity().getEntityData();
-		entityNBT.setString("waigBiome", biomeName); 
+		//entityNBT.setString("waigBiome", biomeName); 
 		if (entityLiving.isCreatureType(EnumCreatureType.AMBIENT, false)) {
 			entityNBT.setBoolean("waigBiomeAttributeChecked", true);
 			return;
@@ -116,12 +103,12 @@ public class WaigBiomeMobAttributeHandler {
 		if(ConfigManager.enableDebug) {
 		}
 
-		
+		/*
 		if(!(entityNBT.hasKey("waigIsRare")))
 		{
 			entity.setCustomNameTag(biomeName + " " + entity.getName());
 		}
-		
+		*/
 		if (biomeTypesSet.contains(Type.FOREST)) {
 			try {tasks.addTask(1, new net.minecraft.entity.ai.EntityAIFleeSun((EntityCreature) entity, 1.0D));}
 			catch(Exception e){};

@@ -25,6 +25,7 @@ public class ConfigManager {
 	public static boolean enableBiomeDifficultyDebug = false;
 	public static boolean enableBiomeAttributeTweaks = true;
 	public static boolean enableBiomeAttributeTweaksDebug = false;
+	public static boolean enableBiomeRenderColor = false;
 
 	public static int timeFadeIn = 20;
 	public static int displayTime = 10;
@@ -182,6 +183,7 @@ public class ConfigManager {
 		enableRarespawnDebug = config.getBoolean("Enable Debug for Rarespawn logic?", "0Main", true, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableDebugBiomeHUD = config.getBoolean("Enable Debug for biome hud?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
 		enableBiomeDifficultyDebug = config.getBoolean("Enable Debug for Biome Difficulty?", "0Main", false, "Enabling this will write some findings to the log to help with debugging config. Can be chatty, so use with care.");
+		enableBiomeRenderColor = config.getBoolean("Enable color render on mobs?", "0Main", false, "Disable this if you run into rendering errors. Not tested for compat with any mods/mobs. Applies a minor color tweak on render for mobs based on the biome in which they spawn.");
 		
 		timeFadeIn = config.getInt("Fade in Time", "Title Display Timings", timeFadeIn, 0, 100, "Amount of time it takes for the title to fade in. 0 will appear instantly and higher numbers will fade in more slowly. Whole number value measured in ticks (20 per second)");
 		displayTime = config.getInt("Display Time", "Title Display Timings", displayTime, 0, 100, "Amount of time the title displays at full opacity after fading in. 0 will instantly begin the fade out action and higher numbers will display for longer time. Whole number value measured in ticks (20 per second)");

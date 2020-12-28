@@ -147,6 +147,7 @@ public class WaigBiomeDifficultyHandler {
 			Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
 			
 			ResourceLocation loc = Biome.REGISTRY.getNameForObject(mobInBiome);
+			//System.out.println("FOUND MOB IN RESOURCE LOCATION");
 			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println("FOUND MOB IN RESOURCE LOCATION");}
 			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println("Resource location to string");}
 			if(ConfigManager.enableBiomeDifficultyDebug) {System.out.println(loc.toString());}
@@ -181,52 +182,52 @@ public class WaigBiomeDifficultyHandler {
 			double maxFollowRange = 0;
 			String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};  
 
-			if (tier1BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			if (tier1BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();
 			}
-			else if (tier2BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier2BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier2BiomesDifficultyArray.clone();
 			}
-			else if (tier3BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier3BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier3BiomesDifficultyArray.clone();
 			}
-			else if (tier4BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier4BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier4BiomesDifficultyArray.clone();
 			}
-			else if (tier5BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier5BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier5BiomesDifficultyArray.clone();
 			}
-			else if (tier6BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier6BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier6BiomesDifficultyArray.clone();
 			}
-			else if (tier7BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier7BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier7BiomesDifficultyArray.clone();
 			}
-			else if (tier8BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier8BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier8BiomesDifficultyArray.clone();
 			}
-			else if (tier9BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier9BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier9BiomesDifficultyArray.clone();
 			}
-			else if (tier10BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier10BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier10BiomesDifficultyArray.clone();
 			}
-			else if (tier11BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier11BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier11BiomesDifficultyArray.clone();
 			}
-			else if (tier12BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier12BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier12BiomesDifficultyArray.clone();
 			}
-			else if (tier13BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier13BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier13BiomesDifficultyArray.clone();
 			}
-			else if (tier14BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier14BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier14BiomesDifficultyArray.clone();
 			}
-			else if (tier15BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier15BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier15BiomesDifficultyArray.clone();
 			}
-			else if (tier16BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+			else if (tier16BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier16BiomesDifficultyArray.clone();
 			}
 			
@@ -304,80 +305,61 @@ public class WaigBiomeDifficultyHandler {
 		
 		if(ConfigManager.enableBiomeDifficultyDebug == true) {
 			System.out.println("HERE SHE COMES");
-			System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
+			//System.out.println(ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName());
 		}
-				
-
-		/**
-		 * this might all be crap?
-		 * had to use biomeregistry name for a rendition of this feature
-		 * the resource for the actual biome name isnt available in the server space
-		 * was able to resolve this by moving this class back to the client proxy and from the server.
-		 * testing seems good, should work?
-		 */
-		/*
-		biomeName = biomeName.substring(biomeName.lastIndexOf(':')+1);
-		biomeName = biomeName.replace('_', ' ');
-		biomeName = WordUtils.capitalize(biomeName);
-		biomeName = biomeName.replaceAll("Mutated", " ");
-		biomeName = biomeName.replaceAll("Smaller", " ");
-		biomeName = biomeName.replaceAll("With", " ");
-		biomeName = biomeName.replaceAll("Trees", " ");
-		biomeName = biomeName.trim();
-		*/
-		
-		System.out.println("BIOME: " + (mobInBiome.getBiomeName()));
+						
+		//System.out.println("BIOME: " + (ForgeRegistries.BIOMES.getValue(mobInBiome.getRegistryName()).getBiomeName()));
 		EntityLiving entityLiving = (EntityLiving) entity;
 		//NBTTagCompound entityNBT = e.getEntity().getEntityData();	
 		
 		String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};
 		
-		if (tier1BiomesArrayList.contains(mobInBiome.getBiomeName())) {
+		if (tier1BiomesArrayList.contains(biomeName)) {
 			difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();
 		}
-		else if (tier2BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier2BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier2BiomesDifficultyArray.clone();
 		}
-		else if (tier3BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier3BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier3BiomesDifficultyArray.clone();
 		}
-		else if (tier4BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier4BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier4BiomesDifficultyArray.clone();
 		}
-		else if (tier5BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier5BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier5BiomesDifficultyArray.clone();
 		}
-		else if (tier6BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier6BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier6BiomesDifficultyArray.clone();
 		}
-		else if (tier7BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier7BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier7BiomesDifficultyArray.clone();
 		}
-		else if (tier8BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier8BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier8BiomesDifficultyArray.clone();
 		}
-		else if (tier9BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier9BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier9BiomesDifficultyArray.clone();
 		}
-		else if (tier10BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier10BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier10BiomesDifficultyArray.clone();
 		}
-		else if (tier11BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier11BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier11BiomesDifficultyArray.clone();
 		}
-		else if (tier12BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier12BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier12BiomesDifficultyArray.clone();
 		}
-		else if (tier13BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier13BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier13BiomesDifficultyArray.clone();
 		}
-		else if (tier14BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier14BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier14BiomesDifficultyArray.clone();
 		}
-		else if (tier15BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier15BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier15BiomesDifficultyArray.clone();
 		}
-		else if (tier16BiomesArrayList.contains((mobInBiome.getBiomeName()))) {
+		else if (tier16BiomesArrayList.contains((biomeName))) {
 			difficultyValues = ConfigManager.tier16BiomesDifficultyArray.clone();
 		}
 		

@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
@@ -33,7 +34,8 @@ public class WaigRareSpawnHandler {
 	public static Map<String, String> mobAttMap = new HashMap<String, String>();
 	
 	@SubscribeEvent (priority = EventPriority.HIGHEST)
-	public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
+	//public void onMobJoinDoRarespawn(LivingSpawnEvent.CheckSpawn event) {	
+	public void onMobJoinDoRarespawn(EntityJoinWorldEvent event) {	
 		
 		if(ConfigManager.enableRarespawnDebug == true) System.out.println("*CHECKING FOR RARE SPAWN*");
         //if (event.getWorld().isRemote) return;
@@ -45,7 +47,7 @@ public class WaigRareSpawnHandler {
 			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB IS A PLAYER - SKIPPING");
 			return;
 		}
-        if (event.getEntityLiving().isDead){
+        if (event.getEntity().isDead){
 			if(ConfigManager.enableRarespawnDebug == true) System.out.println("MOB WAS FOUND DEAD - SKIPPING");
 			return;
 		}
@@ -127,7 +129,7 @@ public class WaigRareSpawnHandler {
             	if(maxarmor_toughness < 0) maxarmor_toughness = 0;
             	entityarmor_toughness.setBaseValue(maxarmor_toughness);       	
             }
-            
+               
             //attack_damage
             if(mobAttMap.containsKey("attack_damage") 
             		&& mobAttMap.get("attack_damage") != null) 
