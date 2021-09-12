@@ -24,7 +24,7 @@ import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public class WaigBiomeDifficultyHandler {
-	
+
 	public static List<String> tier1BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier1BiomesArray));
 	public static List<String> tier2BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier2BiomesArray));
 	public static List<String> tier3BiomesArrayList = new ArrayList <String>(Arrays.asList(ConfigManager.tier3BiomesArray));
@@ -180,7 +180,8 @@ public class WaigBiomeDifficultyHandler {
 			double maxArmorToughness = 0;
 			double maxKnockbackResist = 0;
 			double maxFollowRange = 0;
-			String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};  
+			String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};
+
 
 			if (tier1BiomesArrayList.contains(mobInBiome.getRegistryName().toString())) {
 				difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();
@@ -313,6 +314,8 @@ public class WaigBiomeDifficultyHandler {
 		//NBTTagCompound entityNBT = e.getEntity().getEntityData();	
 		
 		String[] difficultyValues = {"0", "0", "0", "0", "0", "0", "0", "0"};
+
+
 		
 		if (tier1BiomesArrayList.contains(biomeName)) {
 			difficultyValues = ConfigManager.tier1BiomesDifficultyArray.clone();

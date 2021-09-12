@@ -20,7 +20,7 @@ public class ClientProxy extends CommonProxy {
 		if(ConfigManager.enableBiomeNav==true) MinecraftForge.EVENT_BUS.register(new WaigEventHandler());
 		if(ConfigManager.enableBiomeRenderColor==true) MinecraftForge.EVENT_BUS.register(biomeColorRenderer.class);
 
-		
+
 		//if(ConfigManager.enableBiomeAttributeTweaks==true) MinecraftForge.EVENT_BUS.register(biomeColorRendererNonliving.class); //dont think i need this little guy
 		super.init(event);
 	}	

@@ -2,6 +2,7 @@ package com.tyon2006.whereAmIGoing;
 
 import java.util.logging.Logger;
 
+import com.tyon2006.whereAmIGoing.proxy.ClientProxy;
 import com.tyon2006.whereAmIGoing.proxy.CommonProxy;
 //import com.tyon2006.whereAmIGoing.commands.WaigReload;
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
@@ -31,29 +32,19 @@ public class WhereAmIGoing {
 	public static CommonProxy proxy;
 	
 	@EventHandler
-	public static void PreInit(FMLPreInitializationEvent event)
-	{
+	public static void PreInit(FMLPreInitializationEvent event) {
     	MinecraftForge.EVENT_BUS.register(new ConfigManager());
-    	ConfigManager.init(event.getSuggestedConfigurationFile());    	
+    	ConfigManager.init(event.getSuggestedConfigurationFile());
 	}
 	
 	@EventHandler
-	public static void Init(FMLInitializationEvent event)
-	{
-        proxy.init(event);
+	public static void Init(FMLInitializationEvent event) {
+		proxy.init(event);
 	}
 	
 	@EventHandler
-	public static void PostInit(FMLPostInitializationEvent event)
-	{
-        //proxy.init(event);
-	}
+	public static void PostInit(FMLPostInitializationEvent event) {}
 	
     @EventHandler
-    public void init(FMLServerStartingEvent event)
-    {
-      //logger.info("initialize FMLServerStartingEvent :" + Reference.NAME);
-      //event.registerServerCommand(new WaigReload()); //apparently you can't get this to happen after the client loads. explains why so many mods have their own customer config files.
-    }
-	
+    public void init(FMLServerStartingEvent event) {}
 }

@@ -2,6 +2,8 @@ package com.tyon2006.whereAmIGoing.events;
 
 import java.util.Set;
 
+import net.minecraft.entity.ai.*;
+import net.minecraft.entity.player.EntityPlayer;
 import org.apache.commons.lang3.text.WordUtils;
 
 import com.tyon2006.whereAmIGoing.config.ConfigManager;
@@ -10,11 +12,6 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIBreakDoor;
-import net.minecraft.entity.ai.EntityAILeapAtTarget;
-import net.minecraft.entity.ai.EntityAIMoveIndoors;
-import net.minecraft.entity.ai.EntityAIOpenDoor;
-import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
@@ -41,27 +38,21 @@ public class WaigBiomeMobAttributeHandler {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	//@SideOnly(Side.CLIENT)
 	public void onMobJoinDoBiome(EntityJoinWorldEvent event) {
-
 		if ((event.getEntity().dimension) != 0) return;
-		if (event.getEntity() instanceof EntityPlayerMP) return;
-		if ( !(event.getEntity() instanceof EntityLiving) ) return;
-		if (event.getEntity().getEntityData().hasKey("waigBiomeAttributeChecked")){
-			if (ConfigManager.enableDebug) System.out.println("found " 
+		if (!(event.getEntity() instanceof EntityLiving) || event.getEntity() instanceof EntityPlayer) return;
+		if (event.getEntity().getEntityData().getBoolean("waigBiomeAttributeChecked")){
+			if (ConfigManager.enableDebug) System.out.println("found "
 			+ event.getEntity().getName() 
 			+ " attributes already enhanced for " 
 			+ event.getEntity().getEntityWorld().getBiome(event.getEntity().getPosition()));
 			return;
 		}
-		
-		Entity entity = event.getEntity();
-		
-		Biome mobInBiome = entity.getEntityWorld().getBiome(entity.getPosition());
 		//String biomeName = mobInBiome.getBiomeName();
 				
-		EntityLiving entityLiving = (EntityLiving) entity;
+		EntityLiving entity= (EntityLiving) event.getEntity();
 		NBTTagCompound entityNBT = event.getEntity().getEntityData();
 		//entityNBT.setString("waigBiome", biomeName); 
-		if (entityLiving.isCreatureType(EnumCreatureType.AMBIENT, false)) {
+		if (entity.isCreatureType(EnumCreatureType.AMBIENT, false)) {
 			entityNBT.setBoolean("waigBiomeAttributeChecked", true);
 			return;
 		}
@@ -69,7 +60,7 @@ public class WaigBiomeMobAttributeHandler {
 		Set<Type> biomeTypesSet = BiomeDictionary.getTypes(entity.getEntityWorld().getBiome(entity.getPosition()));
 
 		if(ConfigManager.enableDebug) {
-			System.out.println(biomeTypesSet.toString());
+			System.out.println(biomeTypesSet);
 		}
 		
 		double attArmor = 2;
@@ -81,21 +72,21 @@ public class WaigBiomeMobAttributeHandler {
 		double attKnockbackResist = 0.1;
 		double attSpeed = 10;
 		
-		double mobArmor = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
-		double mobArmorToughness =  entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue();
-		double mobHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
+		double mobArmor = entity.getEntityAttribute(SharedMonsterAttributes.ARMOR).getAttributeValue();
+		double mobArmorToughness =  entity.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS).getAttributeValue();
+		double mobHealth = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue();
 		double mobAttackSpeed = 0;
-		try {mobAttackSpeed =  entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue();}
+		try {mobAttackSpeed =  entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).getAttributeValue();}
 		catch(Exception e) {}
 		double mobDamage = 0;
-		try {mobDamage = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();}
+		try {mobDamage = entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();}
 		catch(Exception e) {}
 		double mobFollowRange = 0;
-		try {mobFollowRange =  entityLiving.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).getAttributeValue();}
+		try {mobFollowRange =  entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).getAttributeValue();}
 		catch(Exception e) {}
-		double mobKnockbackResist = entityLiving.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
+		double mobKnockbackResist = entity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE).getAttributeValue();
 		double mobSpeed = 0;
-		try { mobSpeed = entityLiving.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();}
+		try { mobSpeed = entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue();}
 		catch(Exception e) {}
 		
 		EntityAITasks tasks = ((EntityLiving)entity).tasks;
@@ -110,7 +101,7 @@ public class WaigBiomeMobAttributeHandler {
 		}
 		*/
 		if (biomeTypesSet.contains(Type.FOREST)) {
-			try {tasks.addTask(1, new net.minecraft.entity.ai.EntityAIFleeSun((EntityCreature) entity, 1.0D));}
+			try {tasks.addTask(1, new EntityAIFleeSun((EntityCreature) entity, 1.0D));}
 			catch(Exception e){};
 			((EntityLiving)entity).addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION, 10000, 1, true, false));
 			mobArmor = mobArmor + attArmor;
@@ -176,39 +167,45 @@ public class WaigBiomeMobAttributeHandler {
 		//plains = speed 2% Health -5%
 		
 		//grab all the values
-		IAttributeInstance mobAttributeArmor = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR);
-		mobAttributeArmor.setBaseValue(mobArmor);
-		IAttributeInstance mobAttributeArmorToughness = entityLiving.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS);
-		mobAttributeArmorToughness.setBaseValue(mobArmorToughness);
-		IAttributeInstance mobAttributeHealth = entityLiving.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
-		mobAttributeHealth.setBaseValue(mobHealth);
-		entityLiving.setHealth((float) mobHealth);
-		entityLiving.heal((float) mobHealth);
-		try {
-		IAttributeInstance mobAttributeAttackSpeed = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED);
-		mobAttributeAttackSpeed.setBaseValue(mobAttackSpeed);
+		if (!entity.getEntityData().getBoolean("waigBiomeAttributeChecked")) { // Check just in case, this will 100% prevent stackable attributes
+			IAttributeInstance mobAttributeArmor = entity.getEntityAttribute(SharedMonsterAttributes.ARMOR);
+			mobAttributeArmor.setBaseValue(mobArmor);
+			IAttributeInstance mobAttributeArmorToughness = entity.getEntityAttribute(SharedMonsterAttributes.ARMOR_TOUGHNESS);
+			mobAttributeArmorToughness.setBaseValue(mobArmorToughness);
+			IAttributeInstance mobAttributeHealth = entity.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH);
+			mobAttributeHealth.setBaseValue(mobHealth);
+			entity.setHealth((float) mobHealth);
+			entity.heal((float) mobHealth);
+			try {
+				IAttributeInstance mobAttributeAttackSpeed = entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED);
+				mobAttributeAttackSpeed.setBaseValue(mobAttackSpeed);
+			}
+			catch (Exception e) {
+			}
+			try {
+				IAttributeInstance mobAttributeDamage = entity.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+				mobAttributeDamage.setBaseValue(mobDamage);
+			}
+			catch (Exception e) {
+			}
+			try {
+				IAttributeInstance mobAttributeFollow = entity.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+				mobAttributeFollow.setBaseValue(mobFollowRange);
+			}
+			catch (Exception e) {
+			}
+			IAttributeInstance mobAttributeKnockback = entity.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
+			mobAttributeKnockback.setBaseValue(mobKnockbackResist);
+			try {
+				IAttributeInstance mobAttributeSpeed = entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
+				mobAttributeSpeed.setBaseValue(mobSpeed);
+			}
+			catch (Exception e) {
+			}
 		}
-		catch(Exception e) {}
-		try {
-		IAttributeInstance mobAttributeDamage = entityLiving.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-		mobAttributeDamage.setBaseValue(mobDamage);
-		}
-		catch(Exception e) {}
-		try {
-		IAttributeInstance mobAttributeFollow = entityLiving.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
-		mobAttributeFollow.setBaseValue(mobFollowRange);
-		}
-		catch(Exception e) {}
-		IAttributeInstance mobAttributeKnockback = entityLiving.getEntityAttribute(SharedMonsterAttributes.KNOCKBACK_RESISTANCE);
-		mobAttributeKnockback.setBaseValue(mobKnockbackResist);
-		try {
-		IAttributeInstance mobAttributeSpeed = entityLiving.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
-		mobAttributeSpeed.setBaseValue(mobSpeed);
-		}
-		catch(Exception e) {}
 		
 		if (ConfigManager.enableDebug) {
-			entityLiving.setCustomNameTag(entityLiving.getName() + " " + mobHealth + " " + mobDamage + " " + mobArmor + " " + mobArmorToughness + " " + mobKnockbackResist + " " + mobFollowRange);
+			entity.setCustomNameTag(entity.getName() + " " + mobHealth + " " + mobDamage + " " + mobArmor + " " + mobArmorToughness + " " + mobKnockbackResist + " " + mobFollowRange);
 		}
 		
 		//entityNBT.setInteger("waigBiomeID", Biome.getIdForBiome(mobInBiome));
