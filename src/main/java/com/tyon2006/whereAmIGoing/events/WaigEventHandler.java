@@ -38,7 +38,7 @@ public class WaigEventHandler {
 		String biomeNameString = currentBiome.getBiomeName();
 		ResourceLocation biomeResLoc = currentBiome.getRegistryName();
 
-		if ((!player.world.isRemote && player.getEntityWorld().getWorldTime() % 20 == 0)
+		if ((player.getEntityWorld().getWorldTime() % 20 == 0)
 				&& event.phase == Phase.END
 				&& biomeResLoc != lastBiomeResLoc
 				&& biomeResLoc != lastLastBiomeResLoc
